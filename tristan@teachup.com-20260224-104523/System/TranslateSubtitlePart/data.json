@@ -2,7 +2,7 @@
   "description": "Ce prompt permet de traduire des sous-titres",
   "obsolete": false,
   "server": "Azure",
-  "model": "Mistral-Large-3",
+  "model": "gpt-4o",
   "temperature": 0.0,
   "verbosity": null,
   "reasoning_effort": null,
