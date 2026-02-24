@@ -1,0 +1,128 @@
+{# liste de toutes les questions #}
+{% set all_questions = other_questions + input_questions %}
+
+{# liste de toutes les bonnes réponses confondues #}
+{% set all_good_answers = all_questions | map(attribute='good_answers') | list %}
+
+{# liste de toutes les mauvaises réponses confondues #}
+{% set all_bad_answers = all_questions | map(attribute='bad_answers') | list %}
+
+{# Initialisation des variables #}
+{% set ns = namespace(kb_query="", ctx_query="") %}
+
+{% for objective in objectives %}
+  {# Query pour la base des connaissances #}
+  {% set ns.kb_query = ns.kb_query ~ objective ~ '; ' %}
+
+  {# Query pour le contexte #}
+  {% set ns.ctx_query = ns.ctx_query ~ objective ~ '; ' %}
+{% endfor %}
+
+{# Génération aléatoire de la longueur et du nombre de paragraphes pour diversifier le style à chaque exécution #}
+{% set number_characters = range(5000, 15000) | random %}
+
+{# Recherche dans la base de connaissance avec la requête construite #}
+{% set kb = knowledge_base | rag(ns.kb_query, 'mmr', number_characters) %}
+
+{# Recherche dans le contexte avec la requête construite #}
+{% set ctx = context | rag(ns.ctx_query, 'mmr', number_characters) %}
+
+{% set starter = ["Quel", "Quelle", "Quels", "Quelles", "Combien", "Avec quoi", "Pour qui", "Pourquoi", "Qui", "Où", "Que", "Qu'est-ce", "Par quel moyen", "De quoi", "Quand", "Depuis quand", "À quelle fréquence", "En quelle année", "Lequel", "Laquelle", "Sur quoi", "À qui", "Pour quelle raison", "Dans quel cas", "Dans quelle situation", "De quelle manière", "Selon quels critères"] | trad("starter") %}
+
+{# Prompt pour l'agent : extraire les concepts #}
+{% set prompt_1 %}
+
+  Extrais 3 notions, chacune devant respecter les conditions suivantes :
+  - Moins de 20 mots chacune ;
+  - Utile pédagogiquement pour le public cible et sur son niveau d'expertise ;
+  - Distincte (les notions ne doivent pas être redondantes entre elles) ;
+  - Pertinente pour le public cible : "{{ target_audience }}" ;
+  - Qui n'est pas déjà abordée dans ces contenus : """{{ all_questions }}"""" ;
+  - Être extraite de ce contenu et uniquement de ce contenu :
+
+  {% if deep_rag == False %}
+
+    """{{ input_content }}"""
+
+  {% else %}
+
+    """{{ kb }}"""
+
+    et
+
+    """{{ ctx }}"""
+
+  {% endif %}
+
+  Rédige ta réponse en {{ language }} ({{ language_code }})
+
+{% endset %}
+
+{% set concepts = agent(prompt_1, 'Azure', 'gpt-4o-mini') %}
+
+Tu dois répondre uniquement au format JSON, sans aucun texte autour.
+
+---
+
+### À partir de cette base de connaissances exclusivement :
+
+{% if deep_rag == True %}
+
+  """{{ knowledge_base | rag(concepts, 'mmr', number_characters) }}"""
+
+{% else %}
+
+  """{{ input_content }}"""
+
+{% endif %}
+
+### Et en utilisant, pour chaque début de question, l'un des pronoms interrogatifs de cette liste :
+{{ starter }}
+
+### Génèe (si tu peux) 3 questions de type QCM.
+
+Chaque question :
+- Utilise l'un des starters interrogatifs possibles ;
+- Porte sur l’un des concepts identifiés ;
+- Ne comporte pas la bonne réponse dans sa formulation ;
+- Est différente de toutes les autres questions déjà posées : {{ all_questions }} ;
+- Est de l'un de ces trois types : analyse, évaluation ou mise en situation ;
+- A **une seule** bonne réponse (et jamais plusieurs possibles) ;
+- Est en lien avec la ou les compétences évaluées.
+
+### Génère, pour chaque question, la bonne réponse, issue de la base de connaissance. Cette bonne réponse doit par ailleurs :
+- Être conforme au starter (la formulation syntaxique de la réponse doit permettre de voir que c'est bien une réponse possible à la question posée) ;
+- Ne doit pas être dans la formulation de la question, même partiellement ;
+- Ne pas être déjà dans la liste des autres bonnes réponses aux autres questions déjà posées : {{ all_good_answers }}.
+- Avoir au maximum 180 caractères sauf si clarté oblige.
+- Commencer par une majuscule, sans ponctuation finale.
+
+Tout le contenu du JSON final (`title`, `good_answer`, etc.) doit être rédigé **exclusivement en {{ language }} ({{ language_code }})**.
+
+- Aucun mot dans une autre langue.
+- Style et tournure conformes à la langue définie.
+
+### Format JSON final
+
+```json
+{
+    "questions": [
+        {
+            "title": "Quel est le rôle d’un tuteur en entreprise ?",
+            "good_answers": ["Accompagner l’intégration du salarié"],
+            "niveau": "compréhension"
+        },
+        {
+            "title": "À quelle fréquence un entretien professionnel doit-il avoir lieu ?",
+            "good_answers": ["Tous les 2 ans"],
+            "niveau": "application"
+        },
+        {
+            "title": "Pourquoi le plan de développement des compétences est-il essentiel ?",
+            "good_answers": ["Pour assurer l’évolution des salariés"],
+            "niveau": "analyse"
+        }
+    ],
+    'error' : si tu n'as pas réussi à créer au moins une question conforme aux critères, envoie "True". Sinon envoie False.
+}
+```

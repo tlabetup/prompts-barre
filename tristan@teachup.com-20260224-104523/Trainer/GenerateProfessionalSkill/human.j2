@@ -1,0 +1,21 @@
+**Contexte de la génération :**
+- Objectif pédagogique : """{{ objectives }}"""
+- Contenu du module : """{{ all_content }}"""
+- Connaissances complémentaires : """{{ knowledge_base | rag(trainer_instructions) }}"""
+- Apprenants qui vont réaliser l'exercice : """{{ target_audience }}"""
+- Instruction de l’auteur : """{{ trainer_instructions }}"""
+
+**Consigne :**
+Génère, en moins de 12 mots, la formulation d'une compétence professionnelle précise en lien avec le contexte de la génération, et particulièrement avec l’instruction de l’auteur.
+
+**Format attendu :**
+
+Revoie un JSON qui contient :
+'success' : vaut 'true' si tu as trouvé une compétence professionnelle, sinon 'false'
+'error' : vaut 'true' si l'on tombe sur l'un des cas suivants :
+- si tu n'as pas trouvé de compétence professionnelle
+- si la compétence professionnelle n'a pas de lien direct avec le contenu du module encadré par """ ou avec les connaissances complémentaires encadré par """
+- si la compétence professionnelle n'a pas de lien avec l'instruction de l'auteur
+'professional_skill' : correspond à la compétence reformulée selon l'instruction et qui commence systématiquement par une majuscule et un verbe à l’infinitif.
+
+Renvoie directement et systématiquement ce JSON et rien d'autre. N'écris rien avant et après les accolades du JSON. Fournis le JSON brut sans balises de code.

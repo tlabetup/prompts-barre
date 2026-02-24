@@ -1,0 +1,9 @@
+{
+  "description": "Ce prompt permet de générer des entraînements pour geste métier donnée",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.3,
+  "media_type": "application/json",
+  "streaming": false
+}

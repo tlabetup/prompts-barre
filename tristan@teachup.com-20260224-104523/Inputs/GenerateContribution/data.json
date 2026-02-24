@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer un mur de contributions.",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.3,
+  "media_type": "application/json",
+  "streaming": false
+}

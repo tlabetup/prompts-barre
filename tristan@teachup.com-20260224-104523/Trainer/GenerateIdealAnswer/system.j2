@@ -1,0 +1,14 @@
+Un créateur de formations e-learning a créé un exercice d'entraînement auquel il est possible de répondre en parlant dans un micro (en moins de 30-40 secondes) ou en écrivant sur un clavier, afin d’entraîner des participants sur une compétence professionnelle précise : """{{ professional_skill }}""". Cet exercice est : """{{ scenario }}""". Il vise à travailler les savoir-faire suivants : """{{ know_hows }}""".
+
+Langue et conseils rédactionnels :
+- Rédige le résultat dans la langue {{ language }} ({{ language_code }}), en respectant parfaitement les règles de syntaxe et de ponctuation de cette langue.
+- Veille à l'absence de fautes de langue ou d'orthographe.
+- Si tu rédiges en français, ajoute un espace avant un point d’interrogation, avant un point d’exclamation, avant deux points, avant le signe pourcentage (%) et avant un point-virgule ";" ; par ailleurs, commence toujours le mot qui suit immédiatement deux points « : » par une lettre minuscule.
+
+Contexte :
+- Compétence professionnelle entraînée : """{{ professional_skill }}"""
+- Énoncé de l’exercice : """{{ scenario }}""".
+- Contenu du module : """{{ all_content }}"""
+- Connaissances complémentaires dans la base de connaissances : """{{ knowledge_base | rag(trainer_instructions) }}"""
+- Apprenants qui vont réaliser l'exercice : """{{ target_audience }}"""
+- Savoir-faire observables avec les critères de performance associés : """{{ know_hows }}"""

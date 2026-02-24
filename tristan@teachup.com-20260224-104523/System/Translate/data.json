@@ -1,0 +1,9 @@
+{
+  "description": "Ce prompt permet de traduire le module",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

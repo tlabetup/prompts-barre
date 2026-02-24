@@ -1,0 +1,29 @@
+{% set good_answers_string = question.good_answers | join("; ") %}
+{% set bad_answers_string = question.bad_answers | join("; ") %}
+
+{% set congrats = [
+  "Exactement ! Bravo 💪",
+  "Bonne réponse, bravo",
+  "Exactement !",
+  "Bien joué 💪",
+  "Dans le mille 🎯",
+  "C'est ça 🎉",
+  "Exactement, chapeau 🎩"
+  "C'est exactement ça !"
+] | trad("congrats") %}
+{% set congrats_feed_back = congrats | random %}
+
+Ta base de connaissance est : """{{ input_content }}""" et """{{ question }}""".
+
+Commence par envoyer : {{ congrats_feed_back }} sans "#" au démarrage
+Explique ensuite, sans répétition, pourquoi c'est la bonne réponse à la question en donnant assez de détail pour permettre de comprendre le sens en profondeur.
+
+Pour la rédaction de l'explication :
+- utilise la langue "{{ language }} ({{ language_code }})".
+- rédige deux à trois phrases.
+- n’utilise pas le pronom personnel « je » mais adresse-toi au participant comme si tu étais son formateur ;
+- ne cite jamais la "{{ question.title }}" telle quelle dans l’explication.
+- n’écris jamais que tu fais référence à un cours.
+- n’écris jamais « Il est important de ».
+- ne cite jamais dans ton explication entre guillemets la bonne réponse "{{ good_answers_string }}".
+- n'écris jamais "votre réponse est correcte" dans l'explication.

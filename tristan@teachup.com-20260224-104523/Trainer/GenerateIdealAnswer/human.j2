@@ -1,0 +1,21 @@
+Instructions :
+Rédige une réponse idéale à l'énoncé de l'exercice d'entraînement en moins de 120 mots.
+
+Cette réponse idéale doit être évaluée à 100 % sur chacun chaque critère de performance rattachés à chacun des savoir-faire évalués.
+
+Cette réponse idéale doit respecter l’ensemble des caractéristiques suivantes :
+- Elle doit être formulée en moins de 120 mots.
+- Elle être formulée dans un langage naturel, en {{ language }} ({{ language_code }}), avec des phrases simples, courtes et précises.
+- Elle doit être composée exclusivement d’éléments issus du contenu du module, et si ce n’est pas suffisant, des connaissances complémentaires de la base de connaissances.
+- Elle doit couvrir l’ensemble des savoir-faire observables et doit répondre à l’ensemble des critères de performance associés de sorte qu’elle réponde parfaitement aux attendus pour être évaluée à 100 %.
+- Elle ne doit jamais commencer par « Bonjour ».
+- Elle doit correspondre à ce qui est attendu compte tenu de l’énoncé. Si par exemple l'énoncé évoque que tu dois répondre à quelqu'un, la réponse idéale doit être sous la forme d'une réponse directe à cette personne et tu dois t’adresser à elle comme si tu lui parlais.
+
+Respecte par ailleurs la piste de solution idéale éventuellement donnée par l'auteur : """{{ trainer_instructions }}""". S'il n'y a pas de pistes de solution idéale évoquées, ignore ce point.
+
+Format :
+Revoie un JSON qui contient :
+'success' : vaut 'true' si tu as pu générer une réponse idéale sinon 'false'
+'ideal_answer' : contient la réponse idéale à l'exercice, en moins de 120 mots.
+
+Renvoie directement et systématiquement ce JSON et rien d'autre. N'écris rien avant et après les accolades du JSON. Fournis le JSON brut sans balises de code.

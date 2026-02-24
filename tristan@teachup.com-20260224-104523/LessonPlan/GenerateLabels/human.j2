@@ -1,0 +1,61 @@
+Base de connaissances pour ta génération :
+Utilise uniquement la base suivante : """{{ knowledge_base | rag(plan_item.title, 'mmr', 4000) }}""".
+Tu ne dois jamais inventer d’autres données, informations, chiffres ou dates qui ne figureraient pas dans cette base.
+
+Le niveau de difficulté et la précision doivent correspondre au public cible : {{ target_audience }}.
+
+{# Liste de toutes les étiquettes existantes #}
+{% set all_labels = validated_labels + invalidated_labels %}
+{% set all_labels_titles = all_labels | map('title') | list | join('; ') %}
+
+Ta mission :
+Sachant que le titre de cette partie est """{{ plan_item.title }}""", génère dans la langue """{{ language }} ({{ language_code }})""" entre 2 et 4 étiquettes symbolisant chacune une sous-partie, en respectant strictement toutes les consignes suivantes :
+
+---
+
+**Règles obligatoires pour les titres ('title') :**
+- Moins de 25 mots.
+- Le premier mot doit commencer par une majuscule.
+- Tous les mots suivants doivent être en minuscules, sauf pour :
+  - Les acronymes (ex : LED, HTML, ISO)
+  - Les noms propres (ex : Google, Tesla)
+- Aucun mot ordinaire ne doit avoir une majuscule.
+- Aucun point final.
+- Si cette règle n'est pas respectée, tu dois corriger immédiatement en réécrivant correctement.
+
+Exemples corrects :
+- "Avantages de l'assistance au stationnement latéral"
+- "Installation des capteurs de recul led"
+
+Exemples incorrects à éviter absolument :
+- "Avantages De L'Assistance Au Stationnement Latéral"
+- "Installation Des Capteurs De Recul Led."
+
+---
+
+**Règles pour les descriptions ('description') :**
+- 50 mots maximum.
+- Phrases courtes ou segments séparés par des virgules.
+- Ne pas paraphraser le titre.
+- Utiliser uniquement des concepts clés issus de la base de connaissances.
+
+---
+
+**Structure finale exigée :**
+
+```json
+{
+"labels": [
+{
+"title": "Texte respectant exactement la casse demandée",
+"description": "Synthèse fidèle et concise basée uniquement sur la base de connaissances"
+},
+...
+]
+}
+
+Important :
+
+Si le titre n'est pas conforme aux règles de casse, considère ta génération comme incorrecte et reformule-la avant de finaliser.
+
+Ne jamais utiliser de majuscule sur des mots ordinaires.

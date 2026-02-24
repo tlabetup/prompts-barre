@@ -1,0 +1,9 @@
+{
+  "description": "Ce prompt permet de créer un teaser de la formation avec l'essentiel à retenir en trois points.",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.1,
+  "media_type": "application/json",
+  "streaming": false
+}

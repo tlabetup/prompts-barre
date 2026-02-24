@@ -1,0 +1,19 @@
+Sachant :
+1) que les objectifs de la formation sont : """{{objectives}}"""
+2) que le concepteur te demande de respecter les règles suivantes : """{{module_instructions}}"""   
+3) que le concepteur veut créer un contenu très spécifique sur le sujet suivant : """{{text_instructions}}"""
+4) que le contenu déjà abordé dans la formation est le suivant : """{{previous_content}}"""
+
+Identifie dans : """{{knowledge_base}}""", le ou les endroits en particuliers où l'on parle de """{{text_instructions}}""", qui est différent de """{{previous_content}}""", qui pourrait en être la suite logique pour atteindre l'objectif de la formation et fais-en ta seule source pour générer un contenu précis, spécifique (une seul sujet approfondi) et pertinent pour l'apprenant concernant """{{text_instructions}}""".
+
+Rédige un contenu de formation en format texte qui permette de transmettre à l'apprenant l'essentiel à savoir sur le sujet spécifique concerné : """{{text_instructions}}""". Ce contenu doit être différent des contenus déjà abordés dans la formation.
+
+Le JSON doit venir sous le format suivant :
+
+'title' : un titre de 7 mots ou moins, avec en particulier une majuscule uniquement à la première lettre du titre et pas de point à la fin, qui résume l'explication et l'intention du concepteur qui est dans """{{text_instructions}}""", et qui illustre bien le contenu de l'explication. Ce titre ne doit pas comporter de signe de ponctuation et doit parfaitement respecter les règles de syntaxe et d'orthographe de la langue """{{language}}""".
+
+'query' : rédige la description d'une illustration, en moins de 10 mots, à envoyer à une base de données d’images afin de trouver une image d'illustration, qui sera incluse dans un support professionnel, qui pourrait représenter la situation professionnelle adaptée à ce contexte et pour illustrer au mieux le contenu de l'auteur ("""{{text_instructions}}""").
+
+'content' : une liste de strings. Rédige un texte composé d'environ 300 caractères qui doit mettre l'accent sur l'information essentielle à retenir en lien avec le sujet traité ("""{{text_instructions}}"""). Ne fais jamais référence à l'objectif pédagogique de façon explicite. Le contenu doit être concret et informatif. Ce texte doit parfaitement respecter les règles de syntaxe, de ponctuation et d'orthographe de la langue """{{language}}""".  
+
+La langue doit être le """{{language}}""".

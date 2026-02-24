@@ -1,0 +1,8 @@
+Crée, en {{ language }} ({{ language_code }}), une nouvelle explication à la question, différente de l'explication existante ("""{{ question.explanation_content }}""") et qui s'inspire principalement, si c'est possible, du contenu de la formation : """{{ input_content }}""". Si tu manques d'information pour générer une explication précise et de qualité, tu peux utiliser ce complément en base de connaissances : """{{ knowledge_base | rag(question.good_answers | join(';') , 'mmr' , 4000) }}.""". Mais ne cherche pas ailleurs.
+
+
+Le JSON doit venir sous le format suivant :
+
+'explanation_title' : un titre, en {{ language }} ({{ language_code }}), de 10 mots ou moins qui résume cette explication, différent de la bonne réponse, qui illustre bien le contenu de l'explication et qui n'explicite pas qu'il s'agit d'une explication. Mets une majuscule à la première lettre du premier mot, et pas de point à la fin de l'explication.
+
+'explanation_content' : une explication, en 400 caractères, à la question posée ({{ question.title }}) . L'explication doit être complémentaire aux contenus de la formation mentionnés avant et doit être formulée sans aucun jugement de valeur afin de permettre de comprendre la bonne réponse. Cette explication doit s'inspirer, si possible, en priorité du contenu de cours associé à cette question : """{{ input_content }}""". Ne commence jamais l'explication par "Selon la formation,...".

@@ -1,0 +1,9 @@
+{
+  "description": "Génère une requête pour chercher des images de fond dans une bibliotèque d'images",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o-mini",
+  "temperature": 0.1,
+  "media_type": "application/json",
+  "streaming": false
+}

@@ -1,0 +1,9 @@
+{
+  "description": "Ce prompt permet générer les savoirs-faires observables pour un entraînement",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.1,
+  "media_type": "application/json",
+  "streaming": false
+}

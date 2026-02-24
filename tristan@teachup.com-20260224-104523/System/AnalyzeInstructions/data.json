@@ -1,0 +1,9 @@
+{
+  "description": "Ce prompt permet d'analyser des instructions",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

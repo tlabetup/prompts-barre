@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour évaluer le score d'un savoir-faire observable",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

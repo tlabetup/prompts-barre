@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer des indices pour un savoir-faire",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

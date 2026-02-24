@@ -1,0 +1,398 @@
+{
+  "en-us": {
+    "congrats": {
+      "nkd6h77ysq": "Exactly! Bravo 💪",
+      "eqvjvr3lsq": "Good answer, bravo",
+      "5lyf27ms2u": "Exactly!",
+      "gwdaius7vq": "Well done 💪",
+      "bvs6lhuldu": "Bull's-eye 🎯",
+      "74dq4qsz5i": "That's it 🎉",
+      "vahjwnbgc4": "Exactly, hats off to you 🎩That's exactly right!"
+    }
+  },
+  "fr": {
+    "congrats": {
+      "nkd6h77ysq": "Exactement ! Bravo 💪",
+      "eqvjvr3lsq": "Bonne réponse, bravo",
+      "5lyf27ms2u": "Exactement !",
+      "gwdaius7vq": "Bien joué 💪",
+      "bvs6lhuldu": "Dans le mille 🎯",
+      "74dq4qsz5i": "C'est ça 🎉",
+      "vahjwnbgc4": "Exactement, chapeau 🎩C'est exactement ça !"
+    }
+  },
+  "de": {
+    "congrats": {
+      "nkd6h77ysq": "Genau! Bravo 💪.",
+      "eqvjvr3lsq": "Gute Antwort, bravo",
+      "5lyf27ms2u": "Genau!",
+      "gwdaius7vq": "Gut gemacht 💪.",
+      "bvs6lhuldu": "Ins Schwarze getroffen 🎯.",
+      "74dq4qsz5i": "Das ist es 🎉.",
+      "vahjwnbgc4": "Genau, Hut ab 🎩Das ist genau richtig!"
+    }
+  },
+  "es": {
+    "congrats": {
+      "nkd6h77ysq": "¡Exactamente! Bien hecho 💪",
+      "eqvjvr3lsq": "Buena respuesta, bien hecho",
+      "5lyf27ms2u": "¡Exacto!",
+      "gwdaius7vq": "Bien hecho 💪",
+      "bvs6lhuldu": "Justo en el blanco 🎯",
+      "74dq4qsz5i": "Eso es todo 🎉",
+      "vahjwnbgc4": "Exacto, me quito el sombrero 🎩 ¡Exacto!"
+    }
+  },
+  "pt-pt": {
+    "congrats": {
+      "nkd6h77ysq": "Exatamente! Muito bem 💪",
+      "eqvjvr3lsq": "Boa resposta, muito bem",
+      "5lyf27ms2u": "Exatamente!",
+      "gwdaius7vq": "Muito bem 💪",
+      "bvs6lhuldu": "Mesmo no alvo 🎯",
+      "74dq4qsz5i": "É isso mesmo 🎉",
+      "vahjwnbgc4": "Exatamente, tiro o chapéu para ti 🎩 É isso mesmo!"
+    }
+  },
+  "pt-br": {
+    "congrats": {
+      "nkd6h77ysq": "Exatamente! Muito bem 💪",
+      "eqvjvr3lsq": "Boa resposta, muito bem",
+      "5lyf27ms2u": "Exatamente!",
+      "gwdaius7vq": "Muito bem 💪",
+      "bvs6lhuldu": "Bem no alvo 🎯",
+      "74dq4qsz5i": "É isso aí 🎉",
+      "vahjwnbgc4": "Exatamente, tiro o chapéu para você 🎩 É isso mesmo!"
+    }
+  },
+  "it": {
+    "congrats": {
+      "nkd6h77ysq": "Esattamente! Ben fatto 💪",
+      "eqvjvr3lsq": "Ottima risposta, ben fatta",
+      "5lyf27ms2u": "Esattamente!",
+      "gwdaius7vq": "Ben fatto 💪",
+      "bvs6lhuldu": "Proprio sul bersaglio 🎯",
+      "74dq4qsz5i": "Questo è tutto 🎉",
+      "vahjwnbgc4": "Esattamente, tanto di cappello 🎩 È proprio così!"
+    }
+  },
+  "ru": {
+    "congrats": {
+      "nkd6h77ysq": "Точно! Отличная работа 💪.",
+      "eqvjvr3lsq": "Хороший ответ, молодец",
+      "5lyf27ms2u": "Точно!",
+      "gwdaius7vq": "Отличная работа 💪.",
+      "bvs6lhuldu": "Прямо в цель 🎯",
+      "74dq4qsz5i": "Вот и все 🎉.",
+      "vahjwnbgc4": "Точно, снимаю перед вами шляпу 🎩 Это точно!"
+    }
+  },
+  "uk": {
+    "congrats": {
+      "nkd6h77ysq": "Саме так! Молодець 💪",
+      "eqvjvr3lsq": "Гарна відповідь, молодець",
+      "5lyf27ms2u": "Саме так!",
+      "gwdaius7vq": "Молодці 💪",
+      "bvs6lhuldu": "Прямо в ціль 🎯.",
+      "74dq4qsz5i": "Ось так 🎉",
+      "vahjwnbgc4": "Саме так, знімаю перед вами капелюха 🎩 Саме так!"
+    }
+  },
+  "zh-hans": {
+    "congrats": {
+      "nkd6h77ysq": "没错！干得好 💪",
+      "eqvjvr3lsq": "答得好，做得好",
+      "5lyf27ms2u": "没错！",
+      "gwdaius7vq": "干得漂亮 💪",
+      "bvs6lhuldu": "正中目标 🎯",
+      "74dq4qsz5i": "就是这样 🎉",
+      "vahjwnbgc4": "没错，向你致敬 🎩 说得太对了！"
+    }
+  },
+  "zh-hant": {
+    "congrats": {
+      "nkd6h77ysq": "沒錯！做得好 💪",
+      "eqvjvr3lsq": "答得好，做得好",
+      "5lyf27ms2u": "沒錯",
+      "gwdaius7vq": "做得好 💪",
+      "bvs6lhuldu": "正中目標 🎯",
+      "74dq4qsz5i": "就是這樣 🎉",
+      "vahjwnbgc4": "沒錯，向您致敬 🎩 說得一點也沒錯！"
+    }
+  },
+  "ja": {
+    "congrats": {
+      "nkd6h77ysq": "その通り！よくやった💪。",
+      "eqvjvr3lsq": "いい答えだ。",
+      "5lyf27ms2u": "その通りだ！",
+      "gwdaius7vq": "よくやった💪。",
+      "bvs6lhuldu": "狙い通り🎯。",
+      "74dq4qsz5i": "以上です🎉。",
+      "vahjwnbgc4": "その通り、脱帽です🎩 まさにその通り！"
+    }
+  },
+  "ko": {
+    "congrats": {
+      "nkd6h77ysq": "바로 그거예요! 잘했어요 💪",
+      "eqvjvr3lsq": "좋은 답변, 잘했습니다.",
+      "5lyf27ms2u": "바로 그거예요!",
+      "gwdaius7vq": "잘했어 💪",
+      "bvs6lhuldu": "목표에 바로 도달 🎯",
+      "74dq4qsz5i": "여기까지입니다 🎉",
+      "vahjwnbgc4": "바로 그거예요 🎩 맞습니다!"
+    }
+  },
+  "id": {
+    "congrats": {
+      "nkd6h77ysq": "Tepat sekali! Bagus sekali 💪",
+      "eqvjvr3lsq": "Jawaban yang bagus, dilakukan dengan baik",
+      "5lyf27ms2u": "Tepat!",
+      "gwdaius7vq": "Bagus sekali 💪",
+      "bvs6lhuldu": "Tepat sasaran 🎯",
+      "74dq4qsz5i": "Itu saja 🎉",
+      "vahjwnbgc4": "Tepat sekali, tepuk tangan untuk Anda 🎩 Benar sekali!"
+    }
+  },
+  "pl": {
+    "congrats": {
+      "nkd6h77ysq": "Dokładnie! Dobra robota 💪",
+      "eqvjvr3lsq": "Dobra odpowiedź, dobra robota",
+      "5lyf27ms2u": "Dokładnie!",
+      "gwdaius7vq": "Dobra robota 💪",
+      "bvs6lhuldu": "Dokładnie na celowniku 🎯",
+      "74dq4qsz5i": "To wszystko 🎉",
+      "vahjwnbgc4": "Dokładnie, czapki z głów 🎩 Dokładnie tak!"
+    }
+  },
+  "cs": {
+    "congrats": {
+      "nkd6h77ysq": "Přesně tak! Dobrá práce 💪",
+      "eqvjvr3lsq": "Dobrá odpověď, dobře odvedená práce",
+      "5lyf27ms2u": "Přesně tak!",
+      "gwdaius7vq": "Dobrá práce 💪",
+      "bvs6lhuldu": "Přesně na míru 🎯",
+      "74dq4qsz5i": "To je vše 🎉",
+      "vahjwnbgc4": "Přesně tak, klobouk dolů 🎩 Přesně tak!"
+    }
+  },
+  "et": {
+    "congrats": {
+      "nkd6h77ysq": "Täpselt! Hästi tehtud 💪",
+      "eqvjvr3lsq": "Hea vastus, hästi tehtud",
+      "5lyf27ms2u": "Täpselt!",
+      "gwdaius7vq": "Hästi tehtud 💪",
+      "bvs6lhuldu": "Õige pea 🎯",
+      "74dq4qsz5i": "See on kõik 🎉",
+      "vahjwnbgc4": "Täpselt, müts maha 🎩 Täpselt nii ongi!"
+    }
+  },
+  "nl": {
+    "congrats": {
+      "nkd6h77ysq": "Precies! Goed gedaan 💪",
+      "eqvjvr3lsq": "Goed antwoord, goed gedaan",
+      "5lyf27ms2u": "Precies!",
+      "gwdaius7vq": "Goed gedaan 💪",
+      "bvs6lhuldu": "Precies goed 🎯",
+      "74dq4qsz5i": "Dat is het 🎉",
+      "vahjwnbgc4": "Precies, petje af voor jou 🎩 Dat is precies goed!"
+    }
+  },
+  "hu": {
+    "congrats": {
+      "nkd6h77ysq": "Pontosan! Szép munka 💪",
+      "eqvjvr3lsq": "Jó válasz, szép munka",
+      "5lyf27ms2u": "Pontosan!",
+      "gwdaius7vq": "Szép munka 💪",
+      "bvs6lhuldu": "Pontosan a célon 🎯",
+      "74dq4qsz5i": "Ennyi 🎉",
+      "vahjwnbgc4": "Pontosan, le a kalappal előtted 🎩 Pontosan így van!"
+    }
+  },
+  "el": {
+    "congrats": {
+      "nkd6h77ysq": "Ακριβώς! Μπράβο 💪",
+      "eqvjvr3lsq": "Καλή απάντηση, μπράβο",
+      "5lyf27ms2u": "Ακριβώς!",
+      "gwdaius7vq": "Μπράβο 💪",
+      "bvs6lhuldu": "Ακριβώς στο στόχο 🎯",
+      "74dq4qsz5i": "Αυτό είναι όλο 🎉",
+      "vahjwnbgc4": "Ακριβώς, σας βγάζω το καπέλο 🎩 Αυτό είναι ακριβώς σωστό!"
+    }
+  },
+  "nb": {
+    "congrats": {
+      "nkd6h77ysq": "Akkurat! Godt gjort 💪",
+      "eqvjvr3lsq": "Godt svar, godt gjort",
+      "5lyf27ms2u": "Akkurat!",
+      "gwdaius7vq": "Godt gjort 💪",
+      "bvs6lhuldu": "Midt i blinken 🎯",
+      "74dq4qsz5i": "Det var det 🎉",
+      "vahjwnbgc4": "Akkurat, hatten av for deg 🎩 Det er helt riktig!"
+    }
+  },
+  "sv": {
+    "congrats": {
+      "nkd6h77ysq": "Exakt! Bra gjort 💪",
+      "eqvjvr3lsq": "Bra svar, bra gjort",
+      "5lyf27ms2u": "Exakt!",
+      "gwdaius7vq": "Bra gjort 💪",
+      "bvs6lhuldu": "Rätt på målet 🎯",
+      "74dq4qsz5i": "Det är allt 🎉",
+      "vahjwnbgc4": "Exakt, hattar upp till dig 🎩 Det är helt rätt!"
+    }
+  },
+  "bg": {
+    "congrats": {
+      "nkd6h77ysq": "Точно така! Браво 💪",
+      "eqvjvr3lsq": "Добър отговор, добре свършена работа",
+      "5lyf27ms2u": "Точно така!",
+      "gwdaius7vq": "Добре свършена работа 💪",
+      "bvs6lhuldu": "Точно в целта 🎯",
+      "74dq4qsz5i": "Това е всичко 🎉",
+      "vahjwnbgc4": "Точно така, свалям ти шапка 🎩 Точно така!"
+    }
+  },
+  "sk": {
+    "congrats": {
+      "nkd6h77ysq": "Presne tak! Výborne 💪",
+      "eqvjvr3lsq": "Dobrá odpoveď, dobre urobil",
+      "5lyf27ms2u": "Presne tak!",
+      "gwdaius7vq": "Výborne 💪",
+      "bvs6lhuldu": "Presne na mieste 🎯",
+      "74dq4qsz5i": "To je všetko 🎉",
+      "vahjwnbgc4": "Presne tak, klobúk dole 🎩 Presne tak!"
+    }
+  },
+  "tr": {
+    "congrats": {
+      "nkd6h77ysq": "Aynen öyle! Aferin 💪",
+      "eqvjvr3lsq": "İyi cevap, aferin",
+      "5lyf27ms2u": "Aynen öyle!",
+      "gwdaius7vq": "Aferin 💪",
+      "bvs6lhuldu": "Tam hedefte 🎯",
+      "74dq4qsz5i": "İşte bu kadar 🎉",
+      "vahjwnbgc4": "Kesinlikle, size şapka çıkarıyorum 🎩 Bu kesinlikle doğru!"
+    }
+  },
+  "fi": {
+    "congrats": {
+      "nkd6h77ysq": "Juuri niin! Hyvin tehty 💪",
+      "eqvjvr3lsq": "Hyvä vastaus, hyvin tehty",
+      "5lyf27ms2u": "Juuri niin!",
+      "gwdaius7vq": "Hyvin tehty 💪",
+      "bvs6lhuldu": "Aivan kohdallaan 🎯",
+      "74dq4qsz5i": "Se siitä 🎉",
+      "vahjwnbgc4": "Juuri näin, hattua nostaa 🎩 Juuri näin!"
+    }
+  },
+  "da": {
+    "congrats": {
+      "nkd6h77ysq": "Præcis! Godt gået 💪.",
+      "eqvjvr3lsq": "Godt svar, godt gået",
+      "5lyf27ms2u": "Præcis!",
+      "gwdaius7vq": "Godt gået 💪.",
+      "bvs6lhuldu": "Lige i øjet 🎯",
+      "74dq4qsz5i": "Sådan er det 🎉.",
+      "vahjwnbgc4": "Præcis, hatten af for dig 🎩 Det er helt rigtigt!"
+    }
+  },
+  "lt": {
+    "congrats": {
+      "nkd6h77ysq": "Būtent! Puikiai atlikta 💪",
+      "eqvjvr3lsq": "Geras atsakymas, gerai atlikta",
+      "5lyf27ms2u": "Būtent!",
+      "gwdaius7vq": "Puikiai atlikta 💪",
+      "bvs6lhuldu": "Tiksliai į taikinį 🎯",
+      "74dq4qsz5i": "Štai ir viskas 🎉",
+      "vahjwnbgc4": "Būtent, kepurė žemyn 🎩 Tai visiškai teisinga!"
+    }
+  },
+  "lv": {
+    "congrats": {
+      "nkd6h77ysq": "Tieši tā! Labi padarīts 💪",
+      "eqvjvr3lsq": "Laba atbilde, labi darīts",
+      "5lyf27ms2u": "Tieši tā!",
+      "gwdaius7vq": "Labi padarīts 💪",
+      "bvs6lhuldu": "Tieši uz mērķi 🎯",
+      "74dq4qsz5i": "Tas viss 🎉",
+      "vahjwnbgc4": "Tieši tā, cepures nost 🎩 Tieši tā!"
+    }
+  },
+  "ro": {
+    "congrats": {
+      "nkd6h77ysq": "Exact! Bine lucrat 💪",
+      "eqvjvr3lsq": "Bun răspuns, bine făcut",
+      "5lyf27ms2u": "Exact!",
+      "gwdaius7vq": "Bine lucrat 💪",
+      "bvs6lhuldu": "Exact la țintă 🎯",
+      "74dq4qsz5i": "Asta e tot 🎉",
+      "vahjwnbgc4": "Exact, jos pălăria pentru tine 🎩 Este exact așa!"
+    }
+  },
+  "sl": {
+    "congrats": {
+      "nkd6h77ysq": "Točno tako! Dobro opravljeno 💪",
+      "eqvjvr3lsq": "Dober odgovor, dobro opravljeno",
+      "5lyf27ms2u": "Točno tako!",
+      "gwdaius7vq": "Dobro opravljeno 💪",
+      "bvs6lhuldu": "Prav na cilju 🎯",
+      "74dq4qsz5i": "To je to 🎉",
+      "vahjwnbgc4": "Točno tako, kapo dol pred vami 🎩 To je točno tako!"
+    }
+  },
+  "ar": {
+    "congrats": {
+      "nkd6h77ysq": "بالضبط! أحسنت 💪",
+      "eqvjvr3lsq": "إجابة جيدة، أحسنت",
+      "5lyf27ms2u": "بالضبط!",
+      "gwdaius7vq": "أحسنت 💪",
+      "bvs6lhuldu": "على الهدف تماماً 🎯",
+      "74dq4qsz5i": "هذا كل شيء 🎉",
+      "vahjwnbgc4": "بالضبط، أرفع لك القبعات 🎩 هذا صحيح تمامًا!"
+    }
+  },
+  "he": {
+    "congrats": {
+      "nkd6h77ysq": "בדיוק! כל הכבוד 💪",
+      "eqvjvr3lsq": "תשובה נכונה, כל הכבוד",
+      "5lyf27ms2u": "בדיוק!",
+      "gwdaius7vq": "כל הכבוד 💪",
+      "bvs6lhuldu": "בול 🎯",
+      "74dq4qsz5i": "זהו זה 🎉",
+      "vahjwnbgc4": "בדיוק, כל הכבוד 🎩זה בדיוק זה!"
+    }
+  },
+  "fa": {
+    "congrats": {
+      "nkd6h77ysq": "دقیقاً! آفرین 💪",
+      "eqvjvr3lsq": "پاسخ درست، آفرین",
+      "5lyf27ms2u": "دقیقاً!",
+      "gwdaius7vq": "آفرین 💪",
+      "bvs6lhuldu": "درست زدی 🎯",
+      "74dq4qsz5i": "همینه 🎉",
+      "vahjwnbgc4": "دقیقاً، آفرین 🎩 دقیقاً همین است!"
+    }
+  },
+  "hr": {
+    "congrats": {
+      "nkd6h77ysq": "Upravo tako! Bravo 💪",
+      "eqvjvr3lsq": "Točan odgovor, bravo",
+      "5lyf27ms2u": "Točno!",
+      "gwdaius7vq": "Bravo 💪",
+      "bvs6lhuldu": "U sridu 🎯",
+      "74dq4qsz5i": "To je to 🎉",
+      "vahjwnbgc4": "Točno, kapa dolje 🎩 To je točno to!"
+    }
+  },
+  "sr": {
+    "congrats": {
+      "nkd6h77ysq": "Тачно! Браво 💪",
+      "eqvjvr3lsq": "Добар одговор, браво",
+      "5lyf27ms2u": "Тачно!",
+      "gwdaius7vq": "Добар посао 💪",
+      "bvs6lhuldu": "У срце 🎯",
+      "74dq4qsz5i": "То је то 🎉",
+      "vahjwnbgc4": "Тачно, капа доле 🎩 Тачно је тако!"
+    }
+  }
+}

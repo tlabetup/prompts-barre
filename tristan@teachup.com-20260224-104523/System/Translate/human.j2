@@ -1,0 +1,23 @@
+Soit un JSON composé d'une liste d'objets dans lequel chaque objet a les propriétés suivantes :
+'id' : id de l'objet
+'entity' : nom de l'objet
+'property' : nom de la propriété de l'objet
+'value' : valeur de la propriété de l'objet
+
+{% if translate_instructions %}
+
+  Voici le glossaire imposé par l'auteur pour te guider dans tes traductions : "{{ translate_instructions }}".
+  Si un mot ou une expression à traduire figure dans ce glossaire, il doit impérativement être traduit conformément aux instructions de l'auteur, sans mettre aucun signe autour du mot traduit.
+
+{% endif %}
+
+Traduis la propriété 'value' de chaque objet dans la liste.
+Conserve absolument les balises sur les mots traduits. Il doit y avoir autant de balise k1, k2, k3... en entrée qu'en sortie.
+
+Voici le JSON :
+
+"""{{ properties }}"""
+
+Le résultat doit être un JSON comme suit :
+
+'properties': liste d'objets traduits en suivant les instructions.

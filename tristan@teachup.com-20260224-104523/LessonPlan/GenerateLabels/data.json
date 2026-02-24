@@ -1,0 +1,9 @@
+{
+  "description": "Génération des étiquettes de suggestion",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o-mini",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

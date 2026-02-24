@@ -1,0 +1,43 @@
+Contexte :
+- Voici les informations nécessaires pour effectuer l'évaluation :
+-- Scénario de l'exercice : """{{ scenario }}""".
+-- Savoir-faire observable évalué (avec les éléments attendus) : """{{ know_how.name }}""".
+-- Réponse de l'apprenant : """{{ user_answer }}""".
+
+Instructions
+- Calcul du score :
+-- Compte tenu des critères suivants, et uniquement ces critères : "{{ know_how.evaluation_method }}", évalue la réponse de l’apprenant en pourcentage.
+--- Utilise les éléments de contexte complémentaires, le contenu du cours déjà vu par l'apprenant et le scénario de l'exercice pour distinguer les éléments essentiels des critères, des éléments secondaires, de sorte que l'apprenant puisse quand même obtenir un score parfait même si les éléments secondaires ne sont pas mentionnés ou bien si certains ne sont pas mentionnés car jugés évidents dans le contexte.
+--- Si le critère n'est pas factuel, tu évalueras la réponse de l'apprenant sous l'angle d'une intention : s'il existe des éléments sémantiques ou bien si la réponse au global prouvent que l'intention sous-jacente est respectée alors le critère sera considéré comme validé.
+--- De la même façon, si le critère d’évaluation ne mentionne pas l’inverse, accepte les propositions synonymes dès lors qu’elles ont la même signification.
+-- Cette proportion constitue le score qui est une valeur entre 0 et 1. Avec une particularité : si tu détermines en première intention un score supérieur ou égal à 0.81, envoie toujours 1. 
+-- N'évalue l'apprenant que sur le savoir-faire donné, à savoir "{{know_how.name}}" et uniquement sur les critères d'évaluation qui lui sont liés ("{{know_how.evaluation_method}}"). Pas autre chose !
+-- Identifie si la réponse de l'utilisateur est une réponse à l'énoncé ou pas.
+--- Si ce n'est pas une réponse à la question posée dans l'énoncé renvoie un score de 0
+{% if previous_user_answers|length > 0 %}
+    .
+
+    - Cohérence de la notation
+    -- Assure-toi que le score calculé est cohérent avec les scores calculés précédemment pour les précédentes réponses de l'apprenant avec les justifications associées :"
+{% endif %}
+{% for user_answer in previous_user_answers %}
+    Numéro de la tentative : {{ loop.index }}
+    Réponse de l'apprenant : "{{ user_answer }}"
+    Score de l'apprenant : {{ previous_corrections[loop.index0].score }}
+    Justification du calcul du score : {{ previous_corrections[loop.index0].score_explanation }}
+
+{% endfor %}
+Numéro de la tentative (tentative actuelle) : {{ try }}.
+Réponse de l'apprenant : "{{ user_answer }}"."
+{% if user_answer == ideal_answer %}
+    -- L'apprenant a donné une réponse idéale, renvoie un score de 1
+{% endif %}
+
+Format de la réponse
+Renvoie un JSON qui contient :
+- 'success' : vaut "true"
+- 'score' : correspond au score de l'apprenant sur ce savoir-faire observable, si le score est supérieur ou égal à 0.81, envoie 1.
+- 'score_explanation' : une seule phrase qui justifie le score que tu as calculé uniquement lié au savoir-faire considéré et aux critères d'évaluation qui lui sont liés ("{{ know_how.evaluation_method }}").
+- 'good_elements' : phrase qui met en avant les éléments proposés par l'apprenant dans sa réponse et qui sont conformes au critère d'évaluation de ce savoir-faire : "{{ know_how.evaluation_method }}", et qui sont conformes à la base de connaissances.
+- 'missing_false_elements' : phrase qui donne les éléments principaux manquants ou faux de sa réponse et uniquement en lien avec le critère d'évaluation de ce savoir-faire : "{{ know_how.evaluation_method }}". Ne mentionne aucun élément manquant qui ne serait pas en lien avec ce critère.
+- 'new_elements' : phrase qui indique les éléments justes uniquement liés au savoir-faire observable évalué ici que l'apprenant mentionne pour la première fois dans sa tentative actuelle et qu'il n'avait jamais mentionné dans ses précédentes tentatives. Ignore tous les éléments justes qui ne sont pas liés à ce savoir-faire ("{{ know_how.name }}"). Ne les mentionne même pas, c'est-à-dire ne mentionne même pas leur existence quitte à mettre une string vide. Tu vérifieras absolument que les nouveaux éléments mentionnés ne se trouvent pas dans les réponses précédentes de l'apprenant ("{{ previous_user_answers }}"), si c'est le cas ne les mentionne pas. Assure-toi enfin que tous les éléments mentionnés ici sont bien conformes à la base de connaissances. Ignore ceux qui ne le sont pas.

@@ -1,0 +1,59 @@
+{# Initialisation des variables #}
+{% set ns = namespace(query="") %}
+
+{# Agrégation des titres et descriptions des étiquettes #}
+{% set all_labels = validated_labels + invalidated_labels %}
+{% for label in all_labels %}
+  {% set ns.query = ns.query ~ label.title ~ ':' ~ label.description ~ '; ' %}
+{% endfor %}
+{% for objective in objectives %}
+  {% set ns.query = ns.query ~ objective ~ '; ' %}
+{% endfor %}
+
+{# Variabilité de longueur et de structure #}
+{% set number_characters = range(200, 300) | random %}
+{% set number_paragraph = range(2, 3) | random %}
+
+{# Recherche dans la base de connaissance avec la requête construite #}
+{% set kb = knowledge_base | rag(ns.query, 'mmr', 10000) %}
+
+Rédige, en {{ language }} ({{ language_code }}), l’**accroche pédagogique** d’un module e-learning, d’environ **{{ number_characters }} caractères**, répartie sur **{{ number_paragraph }} paragraphes**.
+
+### Contexte :
+- **Thème du module** : {{ theme }}
+- **Objectif pédagogique** : {{ objectives }}
+- **Public cible** : {{ target_audience }}
+- **Instructions spécifiques de l’auteur** : {{ module_instructions }}
+- **Contenu autorisé** : uniquement basé sur : {{ ns.query }}
+
+### Consignes rédactionnelles :
+
+Structure claire, vivante et courte :
+1. Accroche directe, valorisante ou intrigante (jamais générique).
+2. Mise en contexte métier + bénéfice concret de la formation.
+3. Conclusion courte et motivante, avec une **allusion unique** à la dimension adaptative/intelligente du module (sans technicité), et une **formule finale engageante** au ton parlé, sur une **nouvelle ligne**, parmi :
+- *C’est parti ?!*
+- *On y va ?*
+- *Allez, c’est parti !*
+- *On démarre ?!*
+Traduis l'accroche / l'appel à l'action choisi dans la langue {{ language }} ({{ language_code }}).
+
+Style :
+- Ton **dynamique, motivant, fluide**.
+- Paragraphes **sans redite**, de **tailles variées** (court-long-court ou l’inverse).
+- Pas de salutation, pas de phrases comme *"vous allez voir"*, *"cette introduction"*, etc.
+- Pas de "notre", pas de "crucial".
+- 1 ou 2 **emojis maximum**, bien intégrés, jamais décoratifs.
+- Syntaxe et ponctuation correctes (ex. : espace avant « : », « ; », « ? » en français).
+
+### Sortie attendue :
+- `"content"` : **liste de paragraphes** (strings), sans sauts de ligne internes. Le dernier paragraphe doit **se terminer par une ligne vide**, suivie d’un **appel à l’action final**, seul sur sa ligne.
+- `"key_phrases"` : **3 extraits de moins de 9 mots**, issus du `content`, illustrant l’objectif principal.
+- `"title"` : une phrase courte (max 15 mots, sans ponctuation finale), **commençant par une majuscule**, reflétant la **promesse pédagogique** de façon attractive, **sans deux-points**, **pas de majuscules partout**.
+
+Chaque génération doit varier :
+- Le ton (motivant, concret, inspirant…)
+- L’angle d’approche (problème, rôle, bénéfice, terrain…)
+- La structure des paragraphes (court/long/court…)
+
+Le message doit transmettre **une promesse claire de valeur pour l’apprenant**, dans une **formation personnalisée, évolutive, engageante**.

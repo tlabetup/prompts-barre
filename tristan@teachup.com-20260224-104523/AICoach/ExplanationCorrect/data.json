@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer une explication pour l'apprenant quand il a répondu correctement à une question.",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.1,
+  "media_type": "text/plain",
+  "streaming": true
+}

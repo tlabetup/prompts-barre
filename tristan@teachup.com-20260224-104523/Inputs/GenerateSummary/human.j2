@@ -1,0 +1,27 @@
+{# namespace #}
+{% set ns = namespace(all_labels_as_string="", plan_as_string="") %}
+
+{# Liste de toutes les étiquettes #}
+{% set all_labels = validated_labels + invalidated_labels %}
+
+{# Liste de toutes les étiquettes comme une string #}
+{% for label in all_labels %}
+  {% set ns.all_labels_as_string = ns.all_labels_as_string ~ label.title ~ '-' ~ label.description ~ '; ' %}
+{% endfor %}
+
+{# Le plan comme une string #}
+{% for item in plan %}
+  {% set ns.plan_as_string = ns.plan_as_string ~ item.title ~ '-' ~ item.description ~ '; ' %}
+{% endfor %}
+
+Génère, en {{ language }} ({{ language_code }}), un sommaire pédagogique plusieurs parties (3 parties par défaut, mais tu peux en générer 2 ou 4 si tu juges que c’est plus pertinent) qui permettent, chacune, de traiter une partie différente de l'objectif pédagogique ({{ objectives | join("; ") }}) afin de couvrir le contenu de la formation ({{ ns.all_labels_as_string }}) et de suivre dans les grandes lignes le plan ({{ ns.plan_as_string }}), de sorte que les parties ne se recoupent pas, qu’elles suivent une progression pédagogique logique, narrative et progressive, en lien avec le contenu de la formation.
+
+Le JSON doit venir sous le format suivant :
+
+'title' : écris, en le traduisant en {{ language }} ({{ language_code }}), soit : "Ce qui vous attend dans ce module...", soit "Ce qui t’attend dans ce module…" s’il est demandé dans les instructions suivantes de tutoyer le participant : ({{ module_instructions }}). Mets toujours une majuscule au premier mot du titre.
+
+'summary' : liste des parties où chaque partie a deux champs : 'title' et 'description'.
+
+'title' : titre de la partie, en {{ language }} ({{ language_code }}), en une phrase courte de moins de 10 mots, avec simplement une majuscule au premier mot et pas de point à la fin, et qui commence par un verbe à l'infinitif en premier mot.
+
+'description' : explique au participant, en {{ language }} ({{ language_code }}), en une ou deux phrases et en t'adressant à lui, ce qu'il va apprendre dans cette partie, en 50 mots maximum, en mettant en gras (format markdown) les deux passages les plus importants qui permettent de comprendre, en les lisant, l'essentiel de ce texte en lien avec l'objectif de la formation. Utilise le futur proche (utilisation du verbe aller + infinitif) et pas le futur. Commence le paragraphe par une expression du type : « Dans cette partie,… », « Ensuite… », « Enfin… » (si c’est la dernière partie) ou autre chose qui permet de contextualiser la description et de faciliter le lien entre les parties. Évite les répétitions.

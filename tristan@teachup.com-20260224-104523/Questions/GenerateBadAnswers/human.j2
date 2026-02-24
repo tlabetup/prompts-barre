@@ -1,0 +1,72 @@
+Contexte :
+- Le contenu de la formation est : """{{ input_content }}"""
+- La question de type QCM est : "{{ question.title }}"
+- La ou les bonnes réponses sont :
+{% for good_answer in question.good_answers %}
+  -- {{ good_answer }}
+{% endfor %}
+
+- La ou les mauvaises réponses déjà proposées sont :
+{% for bad_answer in question.bad_answers %}
+  -- {{ bad_answer }}
+{% endfor %}
+
+'bad_answers' : génère deux **réponses fausses**, strictement différentes de celles déjà proposées.
+
+---
+
+**Objectif pédagogique**
+
+Pour générer les deux 
+- Inspire-toi de la base de connaissances : 
+"""{{ knowledge_base | rag(question.title, 'similarity' , 2000) }}"""	
+
+- Ou du contenu de la formation : 
+"""{{ context | rag(question.title, 'similarity' , 2000) }}"""
+
+Les réponses doivent :
+- Être **fausses**, mais **subtilement trompeuses**
+- Semer le doute chez un public expérimenté, en exploitant :
+  - des **idées reçues crédibles**
+  - des **connaissances partielles ou déformées**
+  - des **faux amis conceptuels**
+  - des **glissements terminologiques**
+- Favoriser une **discrimination fine** entre vrai et faux, en créant un **contraste intellectuellement stimulant** avec la bonne réponse.
+
+---
+
+**Contraintes formelles**
+
+Les deux mauvaises réponses doivent :
+- Contenir **moins de 10 mots**
+- Avoir une **forme grammaticale identique** à la bonne réponse (ex. : infinitif, article défini, nominalisation, majuscule ou pas à la première lettre…)
+- Être **cohérentes stylistiquement** avec la bonne réponse
+- Ne **jamais se terminer par un point**, si la bonne réponse n’en a pas
+
+---
+
+**Langue**
+
+- Réponses strictement rédigées en {{ language }} ({{ language_code }})
+- Respect du **registre adapté au public** (ton, complexité, vocabulaire)
+
+---
+
+**Conseils de génération et base d'inspiration**
+
+- Évite les erreurs triviales ou absurdes
+- Privilégie des **leurres fins, proches mais conceptuellement erronés**
+- Inspire-toi de **confusions authentiques observées chez les professionnels**
+
+---
+
+Répond uniquement avec ce format JSON :
+
+```json
+{
+    "bad_answers": [
+        "Première mauvaise réponse",
+        "Deuxième mauvaise réponse"
+    ]
+}
+```

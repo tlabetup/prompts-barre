@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour corriger la réponse d'un apprenant quand la permissivité de la réponse est du type 'large'.",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

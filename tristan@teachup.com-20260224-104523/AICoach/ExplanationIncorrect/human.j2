@@ -1,0 +1,15 @@
+{% set good_answers_string = question.good_answers | join("; ") %}
+{% set bad_answers_string = question.bad_answers | join("; ") %}
+
+Explique, en {{ language }} ({{ language_code }}), au participant, avec une formulation positive, pourquoi sa réponse, "{{ user_answer }}", n’est pas la bonne réponse à la question posée, sans jamais t'adresser directement à lui (n'utilise pas "tu" ou "vous" dans ta génération). Propose-lui ensuite une explication qui lui permette de comprendre la bonne réponse.
+
+Pour la rédaction de l'explication :
+- utilise la langue {{ language }} ({{ language_code }}).
+- rédige deux à trois phrases.
+- ne commence jamais par "La réponse donnée..."
+- n’utilise pas le pronom personnel « je » mais adresse-toi au participant comme si tu étais son formateur ;
+- ne cite jamais la "{{ question.title }}" telle quelle dans l’explication.
+- n’écris jamais que tu fais référence à un cours.
+- n’écris jamais « Il est important de » ou "ce qui est essentiel..." ou "crucial" (mot interdit dans ta génération).
+- ne cite jamais dans ton explication entre guillemets la bonne réponse "{{ good_answers_string }}".
+- n'écris jamais "votre réponse est correcte" dans l'explication.

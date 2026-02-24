@@ -1,0 +1,50 @@
+{% set kb1 = content_instructions %}.
+{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr' , 4000) %}.
+
+Rédige un contenu pédagogique au format JSON suivant :
+
+{
+"query": "...",
+"title": "...",
+"description": ["...", "..."]
+}
+
+- Ton objectif est de : """{{ content_main_ideas }}""".
+- Le contenu que tu dois transmettre est :  """{{ kb1 }}""".
+
+Si besoin, tu peux t'appuyer en complément sur la base de connaissance générale qui est ici : """{{ kb2 }}""".
+
+---
+
+Le JSON doit venir sous le format suivant :
+
+QUERY ('query') : invente une requête en quelques mots ou expressions clés pour décrire le sujet principal de ce contenu : "{{ content_main_ideas }}". Contextualise et sépare les mots ou expression par des virgules et classe-les du plus essentiel au moins essentiel pour comprendre de quoi on parle. Moins de 100 caractères.
+
+TITLE (`title`) :
+- Crée un titre en 7 à 12 mots.
+- Commence toujours le premier mot du titre par une majuscule, sans point final.
+- Si le titre contient « : », ajoute une espace avant et après ; le mot qui suit commence par une **minuscule**, sauf si c’est un nom propre ou sigle.
+- Il doit refléter l’idée principale du contenu transmis.
+- Il doit être différent du précédent : """{{ previous_input_content }}""", et marquer une progression logique claire dans la formation.
+
+2. DESCRIPTION (`description`)
+
+Liste de string. Génère un texte qui respecte l’ensemble des conditions suivantes :
+- l’objectif de ce texte est de : """{{ content_main_ideas }}""".
+- ta principale source pour le créer est :  """{{ kb1 }}""".
+- ce texte doit, dans sa forme, respecter ces consignes : """{{ form_instructions }}""".
+- si besoin, tu peux piocher des informations complémentaires dans la base de connaissances générale.
+
+Concernant la forme :
+- Si la consigne indique un format précis (ex. : "paragraphe avec 3 tirets", "liste à puces", "structure en 5 paragraphes", etc.), respecte **strictement ce format** :
+- S'il est demandé un **nombre précis** d’éléments (ex. : 5 paragraphes, 4 puces), ce **nombre doit être respecté exactement**.
+- En cas d’ambiguïté sur la forme, applique la logique suivante :
+- "paragraphe avec 3 tirets" → signifie : retour à la ligne après deux-points, puis trois lignes commençant chacune par un tiret `-`.
+- "X paragraphes" → produire exactement X paragraphes, même si le contenu doit être adapté ou reformulé.
+- "liste à puces" → produire une vraie liste, ligne par ligne.
+
+- Si aucune structure n’est précisée, crée 1 à 2 paragraphes, jusqu’à 110 mots maximum, avec une idée principale par paragraphe et un saut de ligne entre chaque.
+
+Évite toute répétition d'idées ou de mots. Saute une ligne lorsque tu changes de paragraphe si tu crées plusieurs paragraphes. Ne fais pas référence à l'objectif pédagogique de façon explicite.
+
+Respecte bien toutes les instructions rédactionnelles.

@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer un sondage.",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.4,
+  "media_type": "application/json",
+  "streaming": false
+}

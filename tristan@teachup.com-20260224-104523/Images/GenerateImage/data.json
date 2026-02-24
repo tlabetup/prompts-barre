@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer un input image.",
+  "obsolete": true,
+  "server": "Azure",
+  "model": "dall-e-3",
+  "temperature": 0.5,
+  "media_type": "application/json",
+  "streaming": false
+}

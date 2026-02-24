@@ -1,0 +1,113 @@
+{# Initialisation du namespace #}
+{% set ns = namespace(
+  total=0,
+  min_score=1,
+  max_score=0,
+  summary="",
+  best_global_score=0,
+  best_global_index=-1
+) %}
+
+{% set latest_correction = all_corrections | last %}
+{% set latest_score = latest_correction.score %}
+
+{# On détermine si l’auteur veut utiliser le vouvoiement ou le tutoiement #}
+{% if 'tutoyer' in module_instructions|lower or 'tutoie' in module_instructions|lower or 'tutoiement' in module_instructions|lower %}
+  {% set formality = "tutoiement" %}
+{% else %}
+  {% set formality = "vouvoiement" %}
+{% endif %}
+
+{# 1) Identifier la meilleure tentative sur le score global #}
+{% for global_score in previous_user_scores %}
+  {% if global_score > ns.best_global_score %}
+    {% set ns.best_global_score = global_score %}
+    {% set ns.best_global_index = loop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{# 2) Parcourir all_corrections pour calculer min, max, total et générer un résumé #}
+{% for item in all_corrections %}
+  {# Calcul des stats sur le score "savoir-faire" #}
+  {% set ns.total = ns.total + item.score %}
+  {% if item.score > ns.max_score %}
+    {% set ns.max_score = item.score %}
+  {% endif %}
+  {% if item.score < ns.min_score %}
+    {% set ns.min_score = item.score %}
+  {% endif %}
+
+  {# Création de la ligne de résumé pour cette tentative #}
+  {# (ici, on n'affiche le détail que si ce n'est pas la dernière tentative) #}
+  {% if not loop.last and loop.index0 != ns.best_global_index %}
+    {% set line = "Réponse numéro " ~ loop.index ~ " :\n" %}
+    {% set line = line ~ "- Réponse : " ~ previous_user_answers[loop.index0] ~ "\n" %}
+    {% set line = line ~ "- Score savoir-faire : " ~ item.score|string ~ "\n" %}
+    {% set line = line ~ "- Nouveaux éléments mentionnés : " ~ item.new_elements ~ "\n\n" %}
+    {% set ns.summary = ns.summary ~ line %}
+  {% endif %}
+{% endfor %}
+
+{# 3) Calcul de la moyenne de tous les scores savoir-faire #}
+{% set avg = ns.total / (all_corrections | length) %}
+
+{# 4) Récupération de la correction correspondant à la meilleure tentative globale #}
+{% if ns.best_global_index >= 0 %}
+  {% set best_correction = all_corrections[ns.best_global_index] %}
+{% else %}
+{% endif %}
+
+{# Vous pouvez ensuite afficher ns.summary, min_score, max_score, avg, etc. si nécessaire #}
+
+**Contexte général :**
+- Voici le savoir-faire sur lequel tu dois générer un conseil pour l'apprenant : "{{ know_how.name }}".
+- Voici les critères d'évaluation de ce savoir-faire : "{{ know_how.evaluation_method }}".
+- L'apprenant se trouve sur l'écran de bilan de l'exercice qui affiche les scores pour sa réponse à l'exercice.
+
+**Instructions à suivre :**
+
+Génère un feedback pour l'apprenant sur le savoir-faire en suivant ces instructions :
+{% if latest_score == 1 %}
+  -- De façon factuelle et sans féliciter l’apprenant ou porter un jugement sur sa réponse, valorise, dans la langue suivante : {{ language }} ({{ language_code }}), les éléments justes de sa réponse uniquement liés aux éléments suivants : "{{ know_how.evaluation_method }}", en donnant du sens à ce qui était attendu.
+  --- Voici les éléments justes de la réponse de l'apprenant : "{{ all_corrections[-1].score_explanation }}"
+  --- Voici la réponse de l'apprenant : "{{ user_answer }}"
+  --- Si c’est pertinent et si ça permet de prouver que la réponse de l’apprenant correspond bien aux critères d’évaluation sur ce savoir-faire en particulier, mets entre guillemets les éléments justes de la réponse de l'apprenant (les éléments justes sont ici : """{{ all_corrections[-1].good_elements }}""" ; dans ce cas, tu ne mettras entre guillemets que les éléments les plus pertinents et importants, et pas toute la réponse, qui sont en lien avec le savoir-faire dont il s'agit : "{{ know_how.name }}").
+  --- S'il a mentionné dans sa réponse une information, en lien avec "{{ know_how.name }}", qui n'est pas conforme à la base de connaissances, au cours ou à la correction, indique-lui et dit-lui ce qu'il aurait dû donner comme information à la place pour l’aider à la mémoriser.
+  -- Ne cite jamais dans ta génération une information qui figure ici : """{{ all_corrections[-1]. missing_false_elements }}"""
+  -- Adresse-toi directement à l'apprenant, en {{ language }} ({{ language_code }}), en utilisant les instructions de l’auteur ("""{module_instructions}""") : tu ne dois jamais mentionner le mot "apprenant".
+  -- Formule ton message de manière simple, claire, naturelle, cohérente et synthétique en allant à l'essentiel de sorte que n'importe qui puisse facilement comprendre en lisant rapidement.
+  -- Utilise exclusivement la langue suivante : {{ language }} ({{ language_code }}),
+  -- N'utilise jamais de parenthèses.
+  -- Ne mentionne jamais directement le score de l'apprenant sur le savoir-faire.
+  -- Ne mentionne jamais des éléments qui ne sont pas liés à ça : "{{ know_how.evaluation_method }}".
+  -- Tu ne dois pas terminer par un encouragement.
+
+{% endif %}
+
+{% if 0.5 <= latest_score < 1 %}
+  -- De façon factuelle et sans féliciter l’apprenant ou porter un jugement sur sa réponse, valorise, , dans la langue suivante : {{ language }} ({{ language_code }}), les éléments justes de sa réponse uniquement liés aux éléments suivants : "{{ know_how.evaluation_method }}", en évoquant les critères d'évaluation associés à ces éléments justes.
+  --- Voici les éléments justes de la réponse de l'apprenant : "{{ all_corrections[-1].score_explanation }}"
+  --- Voici la réponse de l'apprenant : "{{ user_answer }}"
+  --- Si c’est pertinent et si ça permet de prouver que la réponse de l’apprenant correspond bien aux critères d’évaluation, mets entre guillemets les éléments justes de la réponse de l'apprenant (tu ne mettras entre guillemets que les éléments les plus pertinents et importants, et pas toute la réponse).
+  -- Termine, en une ou deux phrases, , dans la langue suivante : {{ language }} ({{ language_code }}), en lui donnant un conseil précis de ce qu’il aurait pu proposer pour compléter sa réponse et répondre complètement au critère d’évaluation. Commence ta première phrase par : "Pour faire encore mieux, tu aurais pu par exemple… " que tu devras impérativement traduire dans la langue suivante : {{ language }} ({{ language_code }}). Indique uniquement des éléments qu’il n’a pas donné dans sa réponse.
+  -- Adresse-toi directement à l'apprenant, en utilisant les instructions de l’auteur ("""{module_instructions}""") : tu ne dois jamais mentionner le mot "apprenant".
+  -- Formule ton message de manière simple, claire, naturelle, cohérente et synthétique en allant à l'essentiel de sorte que n'importe qui puisse facilement comprendre en lisant rapidement.
+  -- Utilise exclusivement la langue suivante : {{ language }} ({{ language_code }}),
+  -- N'utilise jamais de parenthèses.
+  -- Ne mentionne jamais directement le score de l'apprenant sur le savoir-faire.
+  -- Ne mentionne jamais des éléments qui ne sont pas liés à ça : "{{ know_how.evaluation_method }}".
+  -- Tu ne dois pas terminer par un encouragement.
+
+{% endif %}
+
+{% if latest_score < 0.5 %}
+
+  Indique au participant, dans la langue suivante : {{ language }} ({{ language_code }}), qu’on attendait de lui de "{{ know_how.evaluation_method }}".
+{% endif %}
+
+- La langue de génération est la suivante : {{ language }} ({{ language_code }}).
+- Par défaut, utilise le vouvoiement, sauf si l’auteur demande autre chose. Dans notre contexte, l’auteur souhaite utiliser le : """{{ formality }}""".
+
+Format de la réponse
+Renvoie un JSON qui contient :
+- 'tip': feedback court sur le savoir-faire tel que décrit dans les instructions (en moins de 60 mots).

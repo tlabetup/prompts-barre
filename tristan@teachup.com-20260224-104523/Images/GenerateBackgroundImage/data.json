@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer l'image de fond.",
+  "obsolete": true,
+  "server": "Azure",
+  "model": "dall-e-3",
+  "temperature": 0.0,
+  "media_type": "application/json",
+  "streaming": false
+}

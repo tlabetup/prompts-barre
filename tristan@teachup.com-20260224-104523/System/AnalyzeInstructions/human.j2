@@ -1,0 +1,91 @@
+{% set generation_instructions = '' if not generation_instructions else generation_instructions %}
+
+Tu dois analyser une instruction rédigée par un auteur e-learning, dans le but de générer un contenu pédagogique via la plateforme de formation Teach Up.
+
+Tu dois TOUJOURS répondre au format JSON STRICT, sans aucun commentaire, sans introduction, ni justification.
+
+{% set number_characters_content = range(2000, 2500) | random %}
+{% set kb = knowledge_base | rag(generation_instructions, 'mmr' , 10000) %}.
+
+Cette instruction est la suivante : """{{ generation_instructions }}""".
+
+Tu dois transformer cette instruction en trois variables distinctes : deux liées au fond et une à la forme.
+
+Ta seule source autorisée pour le fond est la partie de la base de connaissances suivante qui concerne le fond / le sujet / les données / les exemples / les informations factuelles : """{{ kb }}""".
+
+Tu ne dois en **aucun cas inventer, extrapoler, déduire ou inférer** des faits, arguments, avantages, impacts, conséquences, causes, ou citations **qui ne sont pas présents explicitement, ou strictement et immédiatement reformulables à partir de formulations précises de cette base**.
+
+- Toute notion ou information absente ou non directement vérifiable dans la base est interdite, même si elle est cohérente, plausible ou répandue dans le domaine.
+- Les citations ne doivent être utilisées **que si elles sont présentes dans la base**. Si aucune citation n’existe, il ne faut pas en inventer ni reformuler un propos comme une citation.
+- Le vocabulaire utilisé (ex : "carburant", "CO2", "empreinte carbone", "sécurité", "écologique") ne doit apparaître **que s’il est explicitement mentionné dans la base**.
+
+Tu ne dois également en **aucun cas reprendre** des contenus déjà abordés dans la formation existante : """{{ context | rag(generation_instructions, 'mmr', 4000) }}""".
+
+Ton objectif est de produire un contenu à forte valeur ajoutée, **entièrement adapté à la cible suivante : {{ target_audience }}**. Cela implique que :
+
+- Le contenu doit prendre en compte le **niveau réel d’expertise** de cette cible.
+- Il doit être **cognitivement exigeant**, en approfondissant le sujet, en contextualisant techniquement et opérationnellement les informations, et en mobilisant les éléments les plus utiles de la base pour la cible.
+- Il doit intégrer **uniquement des exemples, chiffres, formulations ou cas d’usage présents dans la base de connaissances**, et les relier à la réalité métier ou aux enjeux professionnels de {{ target_audience }}.
+- Le contenu doit permettre à cette cible de **mieux expliquer, argumenter, valoriser ou utiliser** le sujet dans un cadre professionnel réel.
+- Tout ce qui est affirmé, illustré ou présenté doit être **directement traçable dans la base**, sans approximation, résumé spéculatif, ni ajout implicite.
+
+Format de sortie attendu (JSON strict) :
+
+{
+'content_instructions' :
+Texte qui détaille le contenu pertinent à transmettre à l’apprenant en lien avec l’instruction de l’auteur : """{{ generation_instructions }}""".
+
+Ce texte :
+- Doit être exclusivement fondé sur la base de connaissances {{ kb }}.
+- Doit avoir une longueur d'environ {{ number_characters_content }} caractères.
+- Doit être structuré, factuel et pédagogique,
+- Ne doit jamais reprendre de contenu déjà présent dans la formation existante.
+- Doit être strictement centré sur les éléments de fond : définitions, concepts, arguments, messages clés et explications pédagogiques.
+- Ne doit contenir aucune consigne ou élément de style mentionné dans {{ generation_instructions }} : pas de citation, pas d’instruction de ton, pas d’émoji, pas de rappel des mots-clés de l’auteur.
+- Doit être adapté au niveau d’expertise des personnes à qui il est adressé : {{ target_audience }}.
+- Ne doit jamais faire mention de la cible, ni s'adresser à elle : le texte doit être neutre et informatif.
+- Doit être exigeant, précis, professionnel et utilisable dans un contexte métier.
+- Ne doit utiliser que des exemples, données ou citations présents dans la base de connaissances, sans ajout ou interprétation non fondée."
+
+"content_main_ideas": "sous la forme de string, enlève tous les éléments de forme de l'instruction de l'auteur, qui est {{ generation_instructions }}, pour ne garder qu'une reformulation synthétique de ce qu'il attend en matière de contenu (le fond). Aucune référence à la forme, au ton, au style ou à la citation ne doit figurer dans cette variable.",
+
+"form_instructions": "Tu dois extraire les consignes de **forme rédactionnelle** contenues dans les deux champs suivants :
+- {{ generation_instructions }}
+- {{ module_instructions }}
+
+Ta tâche est de **rechercher, ligne par ligne**, si une consigne de forme est explicitement exprimée ou très fortement implicite. Tu ne dois **rien interpréter ni inventer**.
+
+Consignes de forme possibles :
+- Style d’adresse (tutoiement, vouvoiement)
+- Ton (formel, enthousiaste, humoristique, motivant, etc.)
+- Structure (listes, paragraphes, tirets…)
+- Type de phrases (courtes, longues, impératives, interrogatives…)
+- Longueur attendue (nombre de mots, de phrases, de paragraphes…)
+- Nombre d’éléments à produire (exemples : 5 idées, 3 étapes, 2 paragraphes…)
+- Ajouts stylistiques : emojis, emoticônes, storytelling, citation, exemple…
+
+Tu dois produire une **liste des consignes trouvées**, en les séparant par ";", en **commençant chaque consigne par un verbe à l’infinitif**.
+
+**Obligatoire** : si **au moins une consigne** est trouvée, tu dois générer un résultat (même s’il y en a qu’une).
+
+**Si tu ne trouves vraiment aucune consigne de forme**, alors et seulement alors, retourne une chaîne vide.
+
+**Format :**
+- une ligne par consigne
+- pas de majuscule ni de point
+- pas de phrases complètes
+- juste l’action demandée
+
+**Exemples valides :**
+utiliser le tutoiement ; ajouter des emojis ; écrire 3 paragraphes
+
+**Important :**
+Si {{ module_instructions }} contient : « tutoiement », « tutoie » ou « tutoi » ou « tutoyer », avec ou sans majuscules → tu dois **obligatoirement** écrire : "utiliser le tutoiement" dans form_instructions.
+Sinon, mets "utiliser le vouvoiement" dans form_instructions.
+"
+}
+
+Vérification obligatoire avant de rendre ta réponse :
+La variable "content_instructions" ne contient aucune mention du ton, d'une citation, de style rédactionnel, d'émoji ou de consigne éditoriale. Ces éléments ne doivent apparaître que dans "form_instructions".
+
+Renvoie directement et systématiquement ce JSON et rien d'autre. N'écris rien avant et après les accolades du JSON. Fournis le JSON brut sans balises de code.

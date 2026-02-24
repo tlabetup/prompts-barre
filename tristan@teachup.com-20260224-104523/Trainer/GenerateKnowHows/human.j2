@@ -1,0 +1,40 @@
+*Contexte :*
+- Compétence professionnelle entraînée : """{{ professional_skill }}""".
+- Énoncé de l’exercice : """{{ scenario }}""".
+- Contenu du module : """{{ all_content }}""".
+- Connaissances complémentaires : """{{ knowledge_base | rag(professional_skill , 'mmr', 6000) }}""".
+- Apprenants qui vont réaliser l'exercice : """{{ target_audience }}""".
+- Instructions de l’auteur : """{{ trainer_instructions }}""".
+
+*Instructions :*
+
+En partant de la question posée dans l’énoncé de l’exercice et du contexte (l’énoncé est : """{{ scenario }}"""), identifie 2 à 5 savoir-faire observables pertinents qui sont évalués dans cet exercice ET qui sont en lien direct avec la compétence professionnelle entraînée.
+
+Pour chaque savoir-faire observable, invente, en moins de 40 mots, les conditions de succès qui décrivent de façon explicite ce qui permet d’observer qu’une personne maîtrise le savoir-faire en question.
+
+*Chaque savoir-faire observable doit répondre aux critères suivants et doit :*
+- Être évaluable dans le cadre de l'exercice, à partir de la question posée : il doit être mobilisé et évaluable dans le cadre de l'exercice d'entraînement proposé spécifiquement : """{{ scenario }}""".
+- Être explicitement présent dans le contenu du module, ou, en dernier recours, présents dans les éléments de la base de connaissances, sans interprétation ou ajout d’informations externes.
+- Être homogène avec les autres savoir-faire.
+- Être centré sur une compétence professionnelle qui figure dans la formation ou dans les connaissances complémentaires.
+- Ne pas concerner la capacité à organiser la réponse de manière concise et claire, et ne doit pas parler de la limite de temps à respecter, sauf si c’est spécifiquement mentionné dans la question posée et que c’est déterminant pour la compétence visée.
+
+Pour chaque savoir-faire observable, invente les conditions de succès rattachées qui permettent d’expliciter ce que fait ou ce que dit une personne 100 % compétente sur ce savoir-faire si elle répond parfaitement à la question posée dans l’énoncé sur ce savoir-faire en particulier. Pour cela, suis les recommandations suivantes :
+- Chaque condition de succès doit décrire ce que doit dire ou faire une personne 100 % compétence
+- Chaque condition de succès doit pouvoir être formulée en moins de 40 mots (maximum deux phrases).
+- Faire commencer chaque condition du succès par un verbe à l'infinitif et par une majuscule ; en précisant clairement les gestes ou étapes attendus, avec des détails explicites, factuels et si possible quantifiables.
+- Assure-toi que chaque condition de succès décrit de manière précise et mesurable ce qui est attendu de l’apprenant.
+- Chaque condition de succès doit être extrait du contenu du module ou, en dernier recours, présent dans la base de connaissances partagée par l’auteur, sans interprétation ou ajout d’informations externes.
+- Chaque condition de succès ne doit pas être rédigée sous la forme d'une question.
+- Chaque condition de succès doit être formulée en prenant en compte que l'apprenant ne peut pas effectuer d'actions manuelles.
+- Garde en tête que l'apprenant n'a pas accès à d'autres informations que l'énoncé de l'exercice pour répondre. Ne formule pas les critères comme si l’apprenant disposait déjà de l’information. Dis plutôt qu’il doit mentionner ou demander cette information.
+- Respecte la piste de grille d'évaluation éventuellement donnée par l'auteur : """{{ trainer_instructions }}""". S'il n'y a pas de pistes de grille d'évaluation évoquées, ignore ce point.
+
+Format :
+Revoie un JSON qui contient :
+'success' : 'true' si tu es parvenu à générer 2 à 5 savoir-faire observables ; sinon 'false'.
+'know_hows' : une liste de 2 à 5 savoir-faire observables, chacun étant composé des propriétés suivantes :
+'name' : le nom du savoir-faire, en moins de 20 mots, qui commence systématiquement par une lettre majuscule et par un nom (pas par un verbe)
+'evaluation_method' : la formulation des conditions de succès, en moins de 40 mots, qui permet de préciser de façon explicite ce qui permet d’observer qu’une personne maîtrise le savoir-faire en question.
+
+Renvoie directement et systématiquement ce JSON et rien d'autre. N'écris rien avant et après les accolades du JSON. Fournis le JSON brut sans balises de code.

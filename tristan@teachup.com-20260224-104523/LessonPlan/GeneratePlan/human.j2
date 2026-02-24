@@ -1,0 +1,31 @@
+{% set query = objectives | join(';') %}
+
+Voici ta base de connaissances :
+"""{{ knowledge_base | rag(query, 'mmr', 100000) }}"""
+Tu ne dois jamais inventer d’autres informations, données, chiffres ou dates qui n’y figurent pas.
+
+Ta mission :
+Génère, exclusivement en {{ language }} ({{ language_code }}), le plan détaillé d’une formation e-learning centré uniquement sur la ou les compétences suivantes : """{{ objectives | join("; ") }}""", en t’appuyant strictement sur la base de connaissances.
+
+Contraintes essentielles :
+- Respecte intégralement la base de connaissances sans jamais extrapoler ni ajouter de contenu extérieur.
+- Ne traite que les contenus nécessaires et essentiels pour développer la compétence visée.
+- Structure impérativement le plan en 2, 3 ou 4 parties, selon la quantité d’informations disponibles.
+
+Organisation du plan :
+- Chaque partie doit être totalement indépendante : aucun recoupement d'idées ou de notions entre elles.
+- Chaque partie doit traiter un axe spécifique, différent et complémentaire.
+- L'ensemble doit suivre une **progression pédagogique logique**, allant du plus fondamental vers le plus avancé ou complexe.
+- Si un sujet est nécessairement préalable à un autre, il doit apparaître avant dans le plan.
+
+Respect absolu du format suivant (réponse en JSON) :
+```json
+{
+"items": [
+{
+"title": "Titre de moins de 15 mots, commençant obligatoirement par un verbe à l’infinitif, sans point final",
+"description": "Synthèse d’environ 100 mots uniquement basée sur la base de connaissances, couvrant intégralement les savoirs essentiels liés à la partie, sans jamais introduire d’éléments extérieurs."
+},
+...
+]
+}

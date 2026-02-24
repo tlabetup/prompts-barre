@@ -1,0 +1,9 @@
+{
+  "description": "Utilise ce prompt pour générer des mauvaises réponses pour une question.",
+  "obsolete": false,
+  "server": "Azure",
+  "model": "gpt-4o",
+  "temperature": 0.2,
+  "media_type": "application/json",
+  "streaming": false
+}

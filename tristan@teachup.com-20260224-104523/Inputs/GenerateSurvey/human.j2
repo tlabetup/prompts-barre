@@ -1,0 +1,52 @@
+
+{% set kb1 = content_instructions %}.
+{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr' , 4000) %}.
+
+Rédige un contenu pédagogique au format JSON suivant :
+
+Rédige, en {{ language }} ({{ language_code }}), une question de sondage, des réponses possibles et une explication associée, qui permettent à l'apprenant de donner son opinion sur un élément intéressant en lien avec un élément particulier de cette partie de la formation : ({{ generation_instructions }}).
+
+L’auteur souhaite que tu respectes ces instructions de forme : {{ form_instructions }}.
+Ta base de connaissances est ici : """{{ kb1 }}""" et ici : """{{ kb2 }}"""
+
+Au départ, l'auteur a demandé à générer une question de sondage avec cette instruction : """{{ generation_instructions }}""". Fais en sorte de suivre ce que tu comprends de son intention à travers cette instruction.
+
+Le JSON doit venir sous le format suivant :
+
+'title' : invente la question d’un sondage, en moins de 25 mots, qui va être proposée aux apprenants pour avoir leur opinion ou leur préférence sur le sujet. Cette question NE DOIT PAS être une question de connaissance (une question de connaissance est une question avec des réponses correctes et incorrectes). Mets dans la question une expression qui montre au participant qu'on attend qu'il partage une opinion ou une préférence comme par exemples :
+- "selon vous" ou "selon toi", "pour vous" ou "pour toi" ou quelque chose d'équivalent si tu demandes une opinion qui suit cette instruction : ({{ module_instructions }}) ;
+- si tu demandes une préférence, ne mets pas "selon vous", "selon toi", "d’après vous" ou "d'après toi"…
+
+**⚠️ Attention à la formulation :**
+- Si tu formules une **opinion**, commence la question par une expression comme "selon vous", "selon toi", "pour vous", "pour toi", ou une expression équivalente. **Dans ce cas, ne pose pas une question avec un verbe exprimant une préférence** (comme "préférez-vous", "aimes-tu le plus", etc.).
+
+✅ Exemple correct : *Selon vous, quel est l’avantage principal de ce type d’équipement ?*
+❌ Exemple incorrect : *Selon toi, quel équipement préfères-tu ?*
+
+- Si tu formules une **préférence**, utilise un verbe comme "préférer", "choisir", "aimer", mais **n’utilise pas** d’expression du type "selon toi", "d’après vous", etc.
+
+✅ Exemple correct : *Quel type d’équipement préfères-tu utiliser dans ce contexte ?*
+❌ Exemple incorrect : *Selon toi, quel type d’équipement préfères-tu ?*
+
+Dans tous les cas :
+- La question ne doit **jamais** être une question de connaissance (c’est-à-dire sans bonne ou mauvaise réponse).
+- La formulation doit être **naturelle, engageante** et donner envie aux apprenants de comparer leur réponse à celle des autres.
+
+Dans un sondage, toutes les réponses proposées doivent être possibles. Le sondage proposé doit donner très envie aux participants de voir ce que les autres participants ont répondu.
+
+'explanation_title' : un titre de moins de 12 mots, avec en particulier une majuscule uniquement à la première lettre du titre et pas de point à la fin, qui résume l'explication et l'intention du concepteur dans cette partie de la formation.
+
+'explanation_content' : rédige un texte de moins 100 mots (sauf infications contraires) pour remercier, et très peu de mot et en suivant les instructions de forme de l'auteur si c'est pertinent ("""{{ form_instructions }}"""), l'apprenant d'avoir répondu au sondage. Puis sers-toi de la base de connaissances pour apporter un complément sur le sujet en lien avec le sondage qui n'a pas déjà été abordé dans la formation.
+
+Évite toute répétition d'idées ou de mots.
+N'utilise jamais le mot "crucial" qui est un mot interdit.
+
+'proposals' : crée une liste de réponses possibles à cette question de sondage.
+
+Le nombre de propositions de réponse doit respecter les instructions de l'auteur concernant le nombre de propositions à créer et qui peuvent se trouver ici """{{ form_instructions }}""". Si aucune instruction sur le nombre de propositions n'est précisée, crée 3 à 5 propositions de réponse à ce sondage (choisis au hasard, de façon équiprobable, si tu crées 3, 4 ou 5 propositions réponse).
+
+Cet objet json doit avoir deux champs :
+
+'label' : une réponse possible à la question posée pour le sondage et qui doit commencer par une majuscule. Elle doit avoir 14 mots au maximum, doit être formulée dans la langue {{ language }} ({{ language_code }}). Ne pas mettre de point à la fin. Les réponses doivent être rédigées comme étant des réponse naturelles, possibles et logiques à la question posée. Commence chaque réponse avec un article, ou avec un pronom (si la réponse doit démarrer par un verbe conjugué), ou un déterminant afin que la réponse puisse être une réponse naturelle qu’aurait donné un humain à cette question. Ne commence jamais les réponses par un verbe conjugué sans mettre de pronom avant.
+
+'description' : rien.

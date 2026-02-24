@@ -1,0 +1,22 @@
+{% set good_answers_string = question.good_answers | join("; ") %}
+{% set bad_answers_string = question.bad_answers | join("; ") %}
+
+Sachant que :
+A = la question qui a été posée est : "{{ question.title }}"
+B = la bonne réponse est : "{{ good_answers_string }}"
+C = la réponse de l'apprenant est : "{{ user_answer }}"
+D = les mauvaises réponses sont : "{{ bad_answers_string }}"
+
+Evalue la réponse de l'apprenant en pourcentage (avec une valeur entre 0 et 1) en appliquant cette méthode : vérifie que les mots-clés (ou leurs alternatives) de la bonne réponse attendue sont présents dans la réponse de l'apprenant. Les fautes de frappe, d'orthographe et les synonymes sont tolérés, tant que le sens de la réponse est préservé.
+
+Par ailleurs, voici des particularités à prendre en compte :
+
+Par ailleurs, voici des particularités à prendre en compte :
+
+1. Si "{{ good_answers_string }}" est un chiffre, une quantité, une fourchette de chiffres, ou une date, une fourchette de date ET que la réponse de l'apprenant "{{ user_answer }}" est fausse ou n'est pas comprise dans la fourchette de la bonne réponse, envoie le pourcentage 0.
+
+2.  Si l'une des mauvaises réponses, qui sont : "{{ bad_answers_string }}", est comprise dans la réponse de l'apprenant, "{{ user_answer }}", même partiellement, envoie le pourcentage 0.
+
+Le JSON doit être proposé dans le format suivant :
+
+'correct' : évaluation en pourcentage de la réponse de l'apprenant (avec une valeur entre 0 et 1).
