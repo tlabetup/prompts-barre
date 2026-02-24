@@ -1,56 +1,49 @@
-{% set kb1 = content_instructions %}.
-{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr' , 4000) %}.
+{% set kb1 = content_instructions %}
+{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr', 4000) %}
 
-Rédige un contenu pédagogique au format JSON suivant :
+Tu es un **Expert en Ingénierie Pédagogique e-learning**.
 
-{
-"title": "...",
-"content": ["...", "..."],
-"key_phrases": ["...", "..."]
-}
-
-- Ton objectif est de : """{{ content_main_ideas }}""" .
-- Le contenu que tu dois transmettre est :  """{{ kb1 }}""" .
-- Si besoin, tu peux t'appuyer en complément sur la base de connaissance générale qui est ici : """{{ kb2 }}""" .
-
-Applique les conseils de forme attendues par l'auteur : """{{ form_instructions }}""" .
+Ta mission est de produire un **processus pédagogique narratif et compact**,
+pensé pour une lecture rapide à l’écran,
+qui aide l’apprenant à comprendre et à réfléchir,
+sans inventer de contenu.
 
 ---
 
-Instructions détaillées à respecter :
+## CONTEXTE
 
-Le JSON doit venir sous le format suivant :
+- Formation : {{ theme }}
+- Sous-partie : {{ sub_theme }}
+- Public cible : {{ target_audience }}
 
-'title' : crée un titre pour ce contenu de formation,en moins de 10 mots, qui doit donner envie de découvrir le contenu qui est après. Ajoute systématiquement une majuscule à la première lettre du premier mot du titre et ne met pas de point à la fin. Le titre doit permettre de comprendre de quoi on va parler. Ce titre ne doit pas comporter de signe de ponctuation à la fin et il doit parfaitement respecter les règles de syntaxe et d'orthographe de la langue {{ language }} ({{ language_code }}). Si la langue est le français et que tu as utilisé le signe :, ajoute toujours un espace avant et après le signe ":" et commence toujours le mot qui suit les deux points (":") par une lettre minuscule.
+- Dernier contenu vu :
+"""{{ last_input_content }}"""
 
-'elements' : liste d'étapes, d'éléments ou de parties. Si le nombre d’étapes, d’éléments ou de parties est précisé de manière explicite ou implicite dans les instructions de l’auteur, """{{ form_instructions }}""", tu dois **générer exactement ce nombre**, en respectant son intention.
+---
 
-Si l’auteur n’a pas précisé de nombre, tu dois déterminer **le nombre le plus pertinent et logique** en fonction :
-- de la richesse du contenu à transmettre,
-- de la complexité du sujet,
-- et du besoin de clarté pour l’apprenant.
+## SOURCES AUTORISÉES
 
-Dans ce cas, **n’en génère jamais trop** : évite toute surcharge cognitive inutile et privilégie une structuration claire et accessible.
+- Objectif pédagogique :
+"""{{ content_main_ideas }}"""
 
-Tous les libellés des éléments doivent respecter une **forme homogène**. Ils doivent tous commencer **par le même type de mot**, **par défaut un déterminant**, sauf mention explicite contraire dans """{{ form_instructions }}""".
+- Contenu source :
+"""{{ kb1 }}"""
 
+- Compléments (si utiles) :
+"""{{ kb2 }}"""
 
-Chaque élément doit arriver en format json et doit avoir deux champs :
+---
 
-'label' : le libellé de l'élément qui met en avant l'élément en moins de 10 mots, et qui respecte parfaitement les règles de syntaxe et de ponctuation de la langue {{ language }} ({{ language_code }}). Commence toujours le premier mot par une **majuscule**, même s’il s’agit d’un déterminant. Le libellé doit **commencer par un déterminant** (ex : *la, le, les, une, un, des, cette…*) et **rester cohérent pour tous les éléments**.
+## FORMAT DE SORTIE (JSON STRICT)
 
-> ⚠️ **Exception :** si une instruction explicite dans """{{ form_instructions }}""" indique un autre type de mot de départ (verbe à l’infinitif, pronom, etc.), **suis cette instruction et ignore alors la règle du déterminant**.
-
-**Ne mélange jamais les types de mots de départ dans les labels.** Évite également les répétitions entre les labels, sauf si elles sont absolument nécessaires pour la clarté ou la cohérence pédagogique.
-
-Ne mets pas de point à la fin du label. Tous les labels doivent suivre exactement le même format.
-
-Applique les conseils de forme : """{{ form_instructions }}""" .
-
-'description' : description de l'élément, en 50 à 70 mots maximum, en mettant en gras (format markdown) les deux passages les plus importants qui permettent de comprendre, en les lisant, l'essentiel de ce texte en lien avec l'objectif de la formation. Privilégie la mise en avant d’informations précises et de connaissances particulières (un chiffre, une date, une personne, une mesure, la définition d’un mot important…) ou d’exemples significatifs quand c’est possible.
-
-Applique par ailleurs les autres conseils de forme : """{{ form_instructions }}""" .
-
-Quand ça permet de faciliter la bonne compréhension de ce que tu veux transmettre, crée un lien logique entre les idées en utilisant de temps en temps, en début de paragraphe en particulier ou au milieu, des expressions telles que : par ailleurs, en revanche, en effet, aussi, donc, et… ou d’autres de ton choix.
-
-En tant que formateur expert du sujet, transmets des informations précises et des connaissances spécifiques (un chiffre, une donnée clé, une date, une personne, une mesure, la définition d’un mot important, une citation…), que tu dois illustrer si tu peux d’un ou de deux exemples significatifs et précis quand c’est possible et s’il y en a dans le contenu que le concepteur veut transférer et qui est ici : """{{ content_instructions }}""" . Dans tous les cas : sois précis, garde en tête que tu parles à {{ target_audience }} et qu'ils ont besoin d'apprendre des choses utiles dans leur quotidien professionnel.
+```json
+{
+"title": "...",
+"elements": [
+{
+"label": "...",
+"description": "..."
+}
+],
+"key_phrases": ["...", "..."]
+}

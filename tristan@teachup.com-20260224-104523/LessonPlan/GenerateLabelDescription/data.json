@@ -2,8 +2,10 @@
   "description": "Génération de la description d'une étiquette",
   "obsolete": false,
   "server": "Azure",
-  "model": "gpt-4o",
+  "model": "gpt-5.2",
   "temperature": 0.1,
+  "verbosity": "medium",
+  "reasoning_effort": "medium",
   "media_type": "application/json",
   "streaming": false
 }

@@ -1,61 +1,94 @@
-Base de connaissances pour ta génération :
-Utilise uniquement la base suivante : """{{ knowledge_base | rag(plan_item.title, 'mmr', 4000) }}""".
-Tu ne dois jamais inventer d’autres données, informations, chiffres ou dates qui ne figureraient pas dans cette base.
+Base de connaissances — source unique et exclusive :
+"""{{ knowledge_base | rag(plan_item.title, 'mmr', 10000) }}"""
 
-Le niveau de difficulté et la précision doivent correspondre au public cible : {{ target_audience }}.
+RÈGLES ABSOLUES
+- Aucune invention, aucune extrapolation, aucun exemple externe
+- Toute notion doit être explicitement présente dans la base OU dans la description
+- Interdiction d’ajouter un concept absent (même s’il semble “logique”)
+- Les chiffres/paramètres (W, P/L, %, pH, °C, minutes…) doivent être placés dans les descriptions, pas dans les titres
 
-{# Liste de toutes les étiquettes existantes #}
-{% set all_labels = validated_labels + invalidated_labels %}
-{% set all_labels_titles = all_labels | map('title') | list | join('; ') %}
+Public cible :
+{{ target_audience }}
 
-Ta mission :
-Sachant que le titre de cette partie est """{{ plan_item.title }}""", génère dans la langue """{{ language }} ({{ language_code }})""" entre 2 et 4 étiquettes symbolisant chacune une sous-partie, en respectant strictement toutes les consignes suivantes :
+Description de la partie :
+"""{{ plan_item.description }}"""
 
----
+MISSION
 
-**Règles obligatoires pour les titres ('title') :**
-- Moins de 25 mots.
-- Le premier mot doit commencer par une majuscule.
-- Tous les mots suivants doivent être en minuscules, sauf pour :
-  - Les acronymes (ex : LED, HTML, ISO)
-  - Les noms propres (ex : Google, Tesla)
-- Aucun mot ordinaire ne doit avoir une majuscule.
-- Aucun point final.
-- Si cette règle n'est pas respectée, tu dois corriger immédiatement en réécrivant correctement.
+Génère entre 6 et 12 étiquettes pédagogiques ordonnées, très proches du plan,
+qui structurent une progression vers la maîtrise :
+- Comprendre (principes / rôles)
+- Mettre en œuvre (actions / étapes)
+- Contrôler (points de contrôle présents dans la base)
+- Prévenir / corriger (erreurs, défauts et prévention présents dans la base)
 
-Exemples corrects :
-- "Avantages de l'assistance au stationnement latéral"
-- "Installation des capteurs de recul led"
-
-Exemples incorrects à éviter absolument :
-- "Avantages De L'Assistance Au Stationnement Latéral"
-- "Installation Des Capteurs De Recul Led."
+IMPORTANT
+- Chaque étiquette = 1 idée principale (pas de mélange de 3 notions dans un même label)
+- Prioriser ce qui contribue directement à “savoir faire”, avant les éléments de contexte (ex. réglementaire)
+sauf si le contexte est indispensable à l’action (ingrédients/levures autorisés, contraintes de process)
 
 ---
 
-**Règles pour les descriptions ('description') :**
-- 50 mots maximum.
-- Phrases courtes ou segments séparés par des virgules.
-- Ne pas paraphraser le titre.
-- Utiliser uniquement des concepts clés issus de la base de connaissances.
+PROCESSUS DE RAISONNEMENT (OBLIGATOIRE — INTERNE, NE PAS AFFICHER)
+
+1) Extraire de la description les notions et actions clés
+2) Vérifier leur présence dans la base
+3) Regrouper en 7–10 blocs pédagogiques (1 idée principale par bloc)
+4) Ordonner selon une montée en compétence :
+   - Fondations (vocabulaire, ingrédients, contraintes)
+   - Mise en œuvre (ordre, gestes, étapes)
+   - Contrôle qualité (critères observables)
+   - Prévention / correction (défauts présents dans la base)
+5) Éliminer redondances et items purement “liste d’infos”
+6) Vérifier que chaque label apporte une valeur distincte et actionnable
 
 ---
 
-**Structure finale exigée :**
+RÈGLES POUR LES TITRES ("title")
 
-```json
+- Moins de 25 mots
+- Premier mot commence par une majuscule
+- Tous les autres mots en minuscules sauf acronymes et noms propres
+- Aucun point final
+- Doivent être formulés comme un bloc de compétence (verbe + objet recommandé)
+- Ne pas mettre de chiffres/valeurs (W, %, pH, °C, minutes…) dans le titre
+
+---
+
+RÈGLES POUR LES DESCRIPTIONS ("description")
+
+- 20 mots maximum
+- Segments courts, virgules autorisées
+- Ne pas paraphraser le titre
+- Premier mot avec majuscule
+- Inclure ici les paramètres, seuils, listes autorisées/interdites si présents dans la base
+- Se termine par un point
+
+---
+
+TITRE FIXE
+
+"Liste de contenus suggérés :"
+ou sa traduction en {{ language }}
+
+---
+
+FORMAT DE SORTIE — JSON STRICT UNIQUEMENT
+
 {
-"labels": [
-{
-"title": "Texte respectant exactement la casse demandée",
-"description": "Synthèse fidèle et concise basée uniquement sur la base de connaissances"
-},
-...
-]
+  "labels": [
+    { "title": "...", "description": "..." }
+  ]
 }
 
-Important :
+---
 
-Si le titre n'est pas conforme aux règles de casse, considère ta génération comme incorrecte et reformule-la avant de finaliser.
+CONTRÔLE FINAL (SILENCIEUX)
 
-Ne jamais utiliser de majuscule sur des mots ordinaires.
+- 6 à 12 labels
+- Progression “comprendre → faire → contrôler → prévenir/corriger”
+- 1 idée principale par label
+- Titres sans chiffres/valeurs
+- Casse conforme
+- 0 concept hors base/description
+- JSON valide, aucun texte hors JSON

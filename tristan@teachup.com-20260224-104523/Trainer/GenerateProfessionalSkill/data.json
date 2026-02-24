@@ -2,8 +2,10 @@
   "description": "Ce prompt permet d'identifier le geste métier pour générer des entraînements",
   "obsolete": false,
   "server": "Azure",
-  "model": "gpt-4o",
+  "model": "Mistral-Large-3",
   "temperature": 0.3,
+  "verbosity": null,
+  "reasoning_effort": null,
   "media_type": "application/json",
   "streaming": false
 }

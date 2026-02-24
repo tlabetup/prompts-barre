@@ -2,8 +2,10 @@
   "description": "Génère une requête pour chercher une image et générer le texte associé",
   "obsolete": false,
   "server": "Azure",
-  "model": "gpt-4o",
+  "model": "Mistral-Large-3",
   "temperature": 0.2,
+  "verbosity": null,
+  "reasoning_effort": null,
   "media_type": "application/json",
   "streaming": false
 }

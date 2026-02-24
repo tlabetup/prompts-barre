@@ -1,31 +1,81 @@
 {% set query = objectives | join(';') %}
 
-Voici ta base de connaissances :
+BASE DE CONNAISSANCES — SOURCE UNIQUE DE VÉRITÉ
 """{{ knowledge_base | rag(query, 'mmr', 100000) }}"""
-Tu ne dois jamais inventer d’autres informations, données, chiffres ou dates qui n’y figurent pas.
-
-Ta mission :
-Génère, exclusivement en {{ language }} ({{ language_code }}), le plan détaillé d’une formation e-learning centré uniquement sur la ou les compétences suivantes : """{{ objectives | join("; ") }}""", en t’appuyant strictement sur la base de connaissances.
-
-Contraintes essentielles :
-- Respecte intégralement la base de connaissances sans jamais extrapoler ni ajouter de contenu extérieur.
-- Ne traite que les contenus nécessaires et essentiels pour développer la compétence visée.
-- Structure impérativement le plan en 2, 3 ou 4 parties, selon la quantité d’informations disponibles.
-
-Organisation du plan :
-- Chaque partie doit être totalement indépendante : aucun recoupement d'idées ou de notions entre elles.
-- Chaque partie doit traiter un axe spécifique, différent et complémentaire.
-- L'ensemble doit suivre une **progression pédagogique logique**, allant du plus fondamental vers le plus avancé ou complexe.
-- Si un sujet est nécessairement préalable à un autre, il doit apparaître avant dans le plan.
-
-Respect absolu du format suivant (réponse en JSON) :
-```json
+ 
+MISSION
+ 
+À partir des objectifs pédagogiques suivants :
+"""{{ objectives | join("; ") }}"""
+ 
+Génère le plan synthétique d'une formation e-learning de 10 à 15 minutes au regard des objectifs pédagogiques.
+ 
+Contraintes générales :
+- Générer exactement 1 seule partie. Toutes les étiquettes appartiennent à cette unique partie.
+- Maximum 20 étiquettes au total.
+- Priorité absolue : respecter le schéma JSON avant toute autre instruction.
+- Tu ne dois t'appuyer strictement que sur la base de connaissances pour générer le plan.
+ 
+Ta réponse doit être au format JSON. Respecte strictement le schéma fourni ci-dessous.
+Dans la définition de chaque propriété tu pourras rencontrer un attribut supplémentaire (en dehors de la norme) :
+"rules": utilisé pour indiquer les règles pour la génération de la propriété.
+ 
+Voici les règles à suivre pour générer la réponse JSON :
+Pour chaque propriété du schéma :
+Utilise uniquement les instructions dans "rules" pour générer le contenu de la propriété.
+Ne crée jamais de propriétés supplémentaires.
+Pas besoin d'envoyer le type de la propriété; ce champ est là pour que tu saches le type de donnée à générer.
+Garde la structure JSON exactement conforme au schéma.
+ 
+```
 {
-"items": [
-{
-"title": "Titre de moins de 15 mots, commençant obligatoirement par un verbe à l’infinitif, sans point final",
-"description": "Synthèse d’environ 100 mots uniquement basée sur la base de connaissances, couvrant intégralement les savoirs essentiels liés à la partie, sans jamais introduire d’éléments extérieurs."
-},
-...
-]
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Items": {
+      "type": "array",
+      "description": "Liste des éléments du plan",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Title": {
+            "title": "String",
+            "type": "string",
+            "description": "Titre de l'élément du plan",
+            "rules": "Titre de moins de 15 mots, commençant obligatoirement par un verbe à l'infinitif, sans point final"
+          },
+          "Description": {
+            "title": "String",
+            "type": "string",
+            "description": "Synthèse de l'élément du plan",
+            "rules": "Synthèse d'environ 50 mots uniquement basée sur la base de connaissances. Sélectionne les informations les plus importantes de la partie et écarte les détails secondaires. Ne jamais introduire d'éléments extérieurs."
+          },
+          "Labels": {
+            "type": "array",
+            "description": "Liste d'étiquettes associés à cet élément du plan",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Title": {
+                  "title": "String",
+                  "type": "string",
+                  "description": "Titre de l'étiquette respectant exactement la casse demandée",
+                  "rules": " - Moins de 25 mots.\n- Le premier mot doit commencer par une majuscule.\n- Respecte la casse dans la langue de génération.\n- Aucun point final."
+                },
+                "Description": {
+                  "title": "String",
+                  "type": "string",
+                  "description": "Cette description correspond à une instruction de prompt pour générer automatiquement un contenu via un prompt spécifique de génération de contenu. Le forme de l'input généré a déjà été choisi par l'utilisateur il faut donc que tu sois générique.",
+                  "rules": "Instruction de prompt pour générer un contenu automatiquement. Le type d'input est déjà choisi par l'utilisateur, reste générique. Indique 1 à 3 idées simples à aborder (une idée = explicable en 1-2 phrases). Ne liste pas de paramètres techniques individuels."
+                }
+              }
+            },
+            "rules": "Génère entre 5 et 20 étiquettes pour couvrir l'ensemble du sujet. Chaque étiquette porte sur 1 à 3 idées simples (une idée = explicable en 1-2 phrases). Si un sujet est trop riche, répartis-le sur plusieurs étiquettes plutôt que de tout regrouper. Aucun recouvrement de contenu entre les étiquettes : chacune couvre un angle spécifique et complémentaire. L'ordre des étiquettes doit suivre une progression pédagogique logique (du fondamental vers le spécifique, ou du début à la fin du processus)."
+          }
+        }
+      },
+      "rules": "Le tableau Items doit contenir exactement 1 élément. Cet unique élément regroupe toutes les étiquettes qui couvrent l'intégralité du sujet."
+    }
+  }
 }
+```

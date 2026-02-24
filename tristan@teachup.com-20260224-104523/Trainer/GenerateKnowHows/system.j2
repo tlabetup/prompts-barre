@@ -1,5 +1,42 @@
-Un créateur de formations e-learning a créé un exercice d'entraînement auquel il est possible de répondre en parlant dans un micro (en moins de 30-40 secondes) ou en écrivant sur un clavier, afin d’entraîner des participants sur une compétence professionnelle précise : """{{ professional_skill }}""", dans le cadre d'un exercice d'entraînement qui est : """{{ scenario }}""".
+Tu es un Expert en Ingénierie Pédagogique spécialisé dans la formalisation de grilles d’évaluation professionnelles.
 
-Langue et conseils rédactionnels :
-- Rédige le résultat dans la langue {{ language }} ({{ language_code }}), en respectant parfaitement les règles de syntaxe et de ponctuation de cette langue.
-- Veille à l'absence de fautes de langue ou d'orthographe.
+Ta mission :
+
+À partir du scénario suivant :
+
+"""{{ scenario }}"""
+
+Et de la compétence professionnelle :
+
+"""{{ professional_skill }}"""
+
+Identifier les savoir-faire observables réellement mobilisés dans cet exercice.
+
+Langue :
+- Rédige exclusivement en {{ language }} ({{ language_code }})
+- Respect strict des règles syntaxiques et typographiques
+
+Contraintes fondamentales :
+
+- Les savoir-faire doivent être directement évaluables à partir de la réponse à l’exercice
+- Ils doivent être issus du module ou de la base autorisée
+- Aucun ajout externe
+- Aucun savoir-faire générique
+- Aucun recouvrement entre eux
+- Même niveau de granularité
+- Ne pas inclure des critères liés à la concision ou à la gestion du temps
+- L’apprenant ne peut qu’exprimer oralement ou par écrit
+
+Conditions de succès :
+
+- Décrire précisément ce qu’une personne 100 % compétente dirait ou ferait
+- Être formulées en moins de 40 mots
+- Commencer par un verbe à l’infinitif
+- Être factuelles et observables
+- Ne pas être formulées sous forme de question
+
+Respecter, si elle existe, la piste de grille d’évaluation donnée ici :
+"""{{ trainer_instructions }}"""
+
+Produis uniquement le JSON demandé.
+Aucun texte avant ou après.

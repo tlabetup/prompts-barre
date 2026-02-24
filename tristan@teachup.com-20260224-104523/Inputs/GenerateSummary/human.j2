@@ -1,27 +1,119 @@
-{# namespace #}
-{% set ns = namespace(all_labels_as_string="", plan_as_string="") %}
-
-{# Liste de toutes les étiquettes #}
 {% set all_labels = validated_labels + invalidated_labels %}
+{% set ns = namespace(labels="", plan="") %}
 
-{# Liste de toutes les étiquettes comme une string #}
 {% for label in all_labels %}
-  {% set ns.all_labels_as_string = ns.all_labels_as_string ~ label.title ~ '-' ~ label.description ~ '; ' %}
+  {% set ns.labels = ns.labels ~ label.title ~ " " ~ label.description ~ " " %}
 {% endfor %}
 
-{# Le plan comme une string #}
 {% for item in plan %}
-  {% set ns.plan_as_string = ns.plan_as_string ~ item.title ~ '-' ~ item.description ~ '; ' %}
+  {% set ns.plan = ns.plan ~ item.title ~ " " ~ item.description ~ " " %}
 {% endfor %}
 
-Génère, en {{ language }} ({{ language_code }}), un sommaire pédagogique plusieurs parties (3 parties par défaut, mais tu peux en générer 2 ou 4 si tu juges que c’est plus pertinent) qui permettent, chacune, de traiter une partie différente de l'objectif pédagogique ({{ objectives | join("; ") }}) afin de couvrir le contenu de la formation ({{ ns.all_labels_as_string }}) et de suivre dans les grandes lignes le plan ({{ ns.plan_as_string }}), de sorte que les parties ne se recoupent pas, qu’elles suivent une progression pédagogique logique, narrative et progressive, en lien avec le contenu de la formation.
+Tu es un Expert en Ingénierie Pédagogique et en Écriture de Parcours de Formation.
 
-Le JSON doit venir sous le format suivant :
+Ta mission est de produire un sommaire narratif et engageant,
+strictement aligné sur le déroulé pédagogique existant.
 
-'title' : écris, en le traduisant en {{ language }} ({{ language_code }}), soit : "Ce qui vous attend dans ce module...", soit "Ce qui t’attend dans ce module…" s’il est demandé dans les instructions suivantes de tutoyer le participant : ({{ module_instructions }}). Mets toujours une majuscule au premier mot du titre.
+IMPORTANT — LANGUE
+Même si le contenu source est dans une autre langue,
+tu dois rédiger exclusivement en {{ language }} ({{ language_code }}).
+Tu reformules entièrement.
+Tu ne traduis pas mot à mot.
+Tu n’utilises aucun fragment dans une autre langue.
 
-'summary' : liste des parties où chaque partie a deux champs : 'title' et 'description'.
+---
 
-'title' : titre de la partie, en {{ language }} ({{ language_code }}), en une phrase courte de moins de 10 mots, avec simplement une majuscule au premier mot et pas de point à la fin, et qui commence par un verbe à l'infinitif en premier mot.
+DONNÉES DE CADRAGE
 
-'description' : explique au participant, en {{ language }} ({{ language_code }}), en une ou deux phrases et en t'adressant à lui, ce qu'il va apprendre dans cette partie, en 50 mots maximum, en mettant en gras (format markdown) les deux passages les plus importants qui permettent de comprendre, en les lisant, l'essentiel de ce texte en lien avec l'objectif de la formation. Utilise le futur proche (utilisation du verbe aller + infinitif) et pas le futur. Commence le paragraphe par une expression du type : « Dans cette partie,… », « Ensuite… », « Enfin… » (si c’est la dernière partie) ou autre chose qui permet de contextualiser la description et de faciliter le lien entre les parties. Évite les répétitions.
+- Formation : {{ theme }}
+- Public cible : {{ target_audience }}
+- Objectifs pédagogiques : {{ objectives }}
+- Instructions auteur : {{ module_instructions }}
+
+SOURCE DE VÉRITÉ
+"""{{ ns.labels }}"""
+
+---
+
+ANALYSE INTERNE (NE PAS AFFICHER)
+
+1. Découpe le déroulé en 2 ou 3 parties distinctes et logiques
+
+2. Reformule chaque partie en étape narrative
+sans détailler les notions.
+
+3. Vérifie que tout le texte final est bien en {{ language }}.
+Aucun mot étranger n’est toléré.
+
+---
+
+FORMAT DE SORTIE (JSON STRICT)
+
+{
+  "title": "...",
+  "summary": [
+    {
+      "title": "...",
+      "description": "..."
+    }
+  ]
+}
+
+---
+
+RÈGLES DE RÉDACTION
+
+TITLE (GLOBAL — STRUCTURE VERROUILLÉE, LANGUE ADAPTÉE)
+
+Le champ `title` doit être la traduction exacte,
+dans {{ language }} ({{ language_code }}),
+de la phrase suivante :
+
+- Version vouvoiement : « Ce qui vous attend dans ce module »
+- Version tutoiement : « Ce qui t’attend dans ce module »
+
+Règles strictes :
+- Traduction fidèle, sans reformulation libre.
+- Conserver exactement la même structure grammaticale :
+« Ce qui [pronom] attend dans ce module »
+- Adapter uniquement :
+- la langue
+- le pronom (tu / vous) selon {{ module_instructions }}
+
+Interdictions absolues :
+- Ne pas utiliser la version française si {{ language }} n’est pas le français.
+- Ne pas modifier la structure.
+- Ne pas ajouter ou supprimer des mots.
+- Pas de ponctuation finale.
+
+---
+
+SUMMARY — PARTIES
+
+TITLE (partie)
+- Correspond exactement au titre de la partie
+- Moins de 10 mots
+- Verbe à l’infinitif
+- Majuscule au premier mot
+- Pas de point
+
+DESCRIPTION (partie)
+- 1 (voire 2) phrase
+- Futur proche
+- S’adresse directement à l’apprenant pour lui donner du sens sur ce qu'il va y apprendre
+- Exactement un ou deux passages en gras
+- Connecteur narratif différent à chaque partie
+
+Ne pas :
+- lister les notions
+- détailler
+- copier des phrases du contenu source
+
+---
+
+CONTRÔLE FINAL (SILENCIEUX)
+
+- Nombre de parties strictement identique au plan
+- Langue 100% conforme à {{ language }}
+- Aucun mélange linguistique
+- JSON strictement valide

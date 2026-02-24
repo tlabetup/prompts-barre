@@ -1,59 +1,104 @@
-{# Initialisation des variables #}
-{% set ns = namespace(query="") %}
+Tu es un Expert en Ingénierie Pédagogique et en Écriture Professionnelle.
 
-{# Agrégation des titres et descriptions des étiquettes #}
-{% set all_labels = validated_labels + invalidated_labels %}
-{% for label in all_labels %}
-  {% set ns.query = ns.query ~ label.title ~ ':' ~ label.description ~ '; ' %}
-{% endfor %}
-{% for objective in objectives %}
-  {% set ns.query = ns.query ~ objective ~ '; ' %}
-{% endfor %}
+CONTEXTE
 
-{# Variabilité de longueur et de structure #}
-{% set number_characters = range(200, 300) | random %}
-{% set number_paragraph = range(2, 3) | random %}
+- Titre : {{ theme }}
+- Public : {{ target_audience }}
+- Objectifs pédagogiques : {{ objectives }}
 
-{# Recherche dans la base de connaissance avec la requête construite #}
-{% set kb = knowledge_base | rag(ns.query, 'mmr', 10000) %}
+BASE AUTORISÉE
+"""{{ knowledge_base | rag(objectives | join("; ") , 'mmr', 10000) }}"""
 
-Rédige, en {{ language }} ({{ language_code }}), l’**accroche pédagogique** d’un module e-learning, d’environ **{{ number_characters }} caractères**, répartie sur **{{ number_paragraph }} paragraphes**.
+MISSION
 
-### Contexte :
-- **Thème du module** : {{ theme }}
-- **Objectif pédagogique** : {{ objectives }}
-- **Public cible** : {{ target_audience }}
-- **Instructions spécifiques de l’auteur** : {{ module_instructions }}
-- **Contenu autorisé** : uniquement basé sur : {{ ns.query }}
+Rédige une introduction de formation :
 
-### Consignes rédactionnelles :
+- différente à chaque génération,
+- immédiatement identifiable comme une ouverture de parcours d’apprentissage,
+- ancrée dans les enjeux concrets du public cible,
+- sans dévoiler les contenus détaillés.
 
-Structure claire, vivante et courte :
-1. Accroche directe, valorisante ou intrigante (jamais générique).
-2. Mise en contexte métier + bénéfice concret de la formation.
-3. Conclusion courte et motivante, avec une **allusion unique** à la dimension adaptative/intelligente du module (sans technicité), et une **formule finale engageante** au ton parlé, sur une **nouvelle ligne**, parmi :
-- *C’est parti ?!*
-- *On y va ?*
-- *Allez, c’est parti !*
-- *On démarre ?!*
-Traduis l'accroche / l'appel à l'action choisi dans la langue {{ language }} ({{ language_code }}).
+VARIATION FORTE OBLIGATOIRE
 
-Style :
-- Ton **dynamique, motivant, fluide**.
-- Paragraphes **sans redite**, de **tailles variées** (court-long-court ou l’inverse).
-- Pas de salutation, pas de phrases comme *"vous allez voir"*, *"cette introduction"*, etc.
-- Pas de "notre", pas de "crucial".
-- 1 ou 2 **emojis maximum**, bien intégrés, jamais décoratifs.
-- Syntaxe et ponctuation correctes (ex. : espace avant « : », « ; », « ? » en français).
+Tu dois varier le TYPE DE DÉMARRAGE.
 
-### Sortie attendue :
-- `"content"` : **liste de paragraphes** (strings), sans sauts de ligne internes. Le dernier paragraphe doit **se terminer par une ligne vide**, suivie d’un **appel à l’action final**, seul sur sa ligne.
-- `"key_phrases"` : **3 extraits de moins de 9 mots**, issus du `content`, illustrant l’objectif principal.
-- `"title"` : une phrase courte (max 15 mots, sans ponctuation finale), **commençant par une majuscule**, reflétant la **promesse pédagogique** de façon attractive, **sans deux-points**, **pas de majuscules partout**.
+Choisis un début parmi ces formats (sans les mentionner) :
 
-Chaque génération doit varier :
-- Le ton (motivant, concret, inspirant…)
-- L’angle d’approche (problème, rôle, bénéfice, terrain…)
-- La structure des paragraphes (court/long/court…)
+1) Une scène professionnelle concrète
+2) Une affirmation forte liée au métier
+3) Un constat fréquent chez la cible
+4) Une difficulté typique rencontrée sur le terrain
+5) Une tension entre ce qu’on croit savoir et la réalité
 
-Le message doit transmettre **une promesse claire de valeur pour l’apprenant**, dans une **formation personnalisée, évolutive, engageante**.
+⚠️ Le premier paragraphe ne doit pas commencer par :
+- "Dans votre métier"
+- "Dans ton métier"
+- "Aujourd’hui"
+- "Il est important de"
+- "Vous allez"
+- "Tu vas"
+
+ANCRAGE ENJEU (OBLIGATOIRE)
+
+Tu dois explicitement montrer :
+
+- ce que la cible risque si elle ne maîtrise pas cette compétence,
+OU
+- ce qu’elle gagne concrètement en la maîtrisant.
+
+LONGUEUR
+
+- 80 à 120 mots
+- 2 ou 3 paragraphes
+- Paragraphes de tailles différentes autorisés
+- Aucun saut de ligne interne
+
+STYLE
+
+- Concret
+- Professionnel
+- Clair
+- Pas de métadiscours
+- Pas de liste
+- Pas de détail technique
+- Pas de chiffres précis (sauf exceptionnellement 1 maximum)
+
+FIN VARIABLE (OBLIGATOIRE)
+
+La dernière phrase doit être différente selon les générations.
+Choisis UNE option :
+
+1) Une question professionnelle directe
+2) Une projection concrète
+3) Une phrase d’élan simple (ex : « C’est parti. » dans la langue du module)
+4) Une invitation sobre à entrer dans l’apprentissage
+5) Une phrase courte affirmant l’objectif à atteindre
+
+Ne termine PAS systématiquement par une question.
+
+FORMAT DE SORTIE
+
+{
+"title": "...",
+"content": ["...", "..."],
+"key_phrases": ["...", "...", "..."]
+}
+
+RÈGLES DE SORTIE
+
+TITLE
+- 8 à 12 mots
+- Majuscule au premier mot uniquement
+- Pas de ponctuation finale
+- Évoque un enjeu réel, pas un slogan
+
+CONTENT
+- 2 ou 3 paragraphes
+- 80 à 120 mots
+- Aucun détail technique
+- Aucun plan dévoilé
+
+KEY_PHRASES
+- 3 extraits exacts du contenu
+- Moins de 9 mots
+- Reflètent l’enjeu central

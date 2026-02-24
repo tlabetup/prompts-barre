@@ -4,6 +4,8 @@
   "server": "Azure",
   "model": "dall-e-3",
   "temperature": 0.0,
+  "verbosity": null,
+  "reasoning_effort": null,
   "media_type": "application/json",
   "streaming": false
 }

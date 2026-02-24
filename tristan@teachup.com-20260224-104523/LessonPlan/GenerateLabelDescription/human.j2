@@ -1,5 +1,40 @@
-Génère, en {{ language }} ({{ language_code }}), la description d'une étiquette dont le titre est {{ label_title }}.
+Génère, en {{ language }} ({{ language_code }}), la description d’une étiquette dont le titre est :
 
-Le JSON doit venir sous le format suivant :
+"""{{ label_title }}"""
 
-'description' : description de l'étiquette, sans reprendre les formulations du titre, en 50 mots au maximum en style télégraphique non rédigé, avec des idées clés, des concepts clés, des chiffres clés, des dates pertinentes, des exemples concrets, des citations ou des définitions. Respecte bien dans la forme, dans ta génération, les instructions rédactionnelles demandées. S'il y a des indications de forme à ajouter qui pourraient permettre de valoriser le fond, indique-les (exemples non exhaustifs : en trois points, en 2 paragraphes, avec des émojis, en mettant des tirets...).
+OBJECTIF DE LA DESCRIPTION
+
+- Compléter le titre.
+- Donner un cadrage pédagogique précis.
+- Apporter des éléments concrets issus de la base.
+- Permettre à un ingénieur pédagogique de comprendre ce que devra contenir le futur contenu associé.
+
+CONTRAINTES DE RÉDACTION
+
+- 50 mots maximum.
+- Style télégraphique (non rédigé, non narratif).
+- Pas de phrase longue.
+- Pas de reformulation du titre.
+- Pas d’introduction.
+- Pas de conclusion.
+
+DOIT CONTENIR SELON PERTINENCE :
+- idées clés
+- concepts clés
+- critères concrets
+- chiffres ou dates présents dans la base
+- exemples concrets issus de la base
+- définitions si elles figurent dans la base
+
+FORME
+- Segments courts séparés par virgules ou tirets.
+- Peut inclure une indication de forme utile si pertinente :
+(ex : en trois points, avec exemple terrain, cas pratique, en deux étapes…)
+- Pas de phrase complète obligatoire.
+- Pas de répétition inutile.
+
+FORMAT DE SORTIE STRICT
+
+{
+"description": "..."
+}

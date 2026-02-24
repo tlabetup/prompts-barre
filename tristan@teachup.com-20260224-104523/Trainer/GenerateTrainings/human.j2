@@ -1,46 +1,97 @@
 Contexte :
-- Objectif pédagogique : """{{ objectives }}""".
-- Contenu du module : """{{ all_content }}""".
-- Connaissances complémentaires : """{{ knowledge_base | rag(professional_skill , 'mmr', 6000) }}""".
-- Apprenants qui vont réaliser l'exercice : """{{ target_audience }}""".
 
-{# On détermine si l’auteur veut utiliser le vouvoiement ou le tutoiement #}
-{% if 'tutoyer' in module_instructions|lower or 'tutoie' in module_instructions|lower or 'tutoiement' in module_instructions|lower %}
+- Compétence professionnelle ciblée : """{{ professional_skill }}"""
+- Objectifs pédagogiques : """{{ objectives }}"""
+- Contenu du module : """{{ all_content }}"""
+- Connaissances complémentaires autorisées : """{{ knowledge_base | rag(professional_skill , 'mmr', 6000) }}"""
+- Public cible : """{{ target_audience }}"""
+- Instructions auteur : """{{ module_instructions }}"""
+- Instructions formateur : """{{ trainer_instructions }}"""
+- Langue de génération : """{{ language }} ({{ language_code }})"""
+
+{# Détermination du niveau de formalité #}
+{% if 'tutoyer' in module_instructions|lower or 'tutoie' in module_instructions|lower or 'tutoiement' in module_instructions|lower or 'utilise le tu' in module_instructions|lower %}
   {% set formality = "tutoiement" %}
 {% else %}
   {% set formality = "vouvoiement" %}
 {% endif %}
 
-- Langue de génération : """{{ language }} ({{ language_code }})""".
-- Par défaut, utilise le vouvoiement, sauf si l’auteur demande autre chose. Dans notre contexte, l’auteur souhaite utiliser le : """{{ formality }}""".
+RÈGLE DE FORMALITÉ — STRICTE
+- Si tutoiement demandé → tutoyer partout
+- Sinon → vouvoiement
+- Aucune alternance.
+- Aucune neutralisation impersonnelle.
 
-Instructions :
-Crée, en {{ language }} ({{ language_code }}), 1 à 3 énoncés d'exercices réalistes qui évaluent l'apprenant sur la compétence professionnelle suivante : """{{ professional_skill }}""", en suivant les instructions : {{ trainer_instructions }}.
+MISSION
 
-Chaque énoncé doit :
-- Intégrer des éléments de mise en situation fournis par l'auteur, ou ignorer ce point si non mentionné.
-- Entraîner et évaluer de façon précise et exhaustive la compétence professionnelle.
-- Être réaliste et ancré dans la pratique professionnelle réelle.
-- Être structuré de cette façon, en 80 à 120 mots : 60 à 80 mots pour expliquer le contexte, présenter le ou les protagonistes et la situation initiale, puis faire parler le protagoniste qui pose la question à l'apprenant en 15 à 30 mots, et enfin, expliquer à l'apprenant en 10 à 20 mots ce qui est attendu de lui en matière de format / longueur / durée de réponse, sans lui donner d'indices ou d'éléments de réponse !
-- Commencer par un cadre clair qui détaille le contexte, qui présente le ou les protagonistes en leur donnant un prénom aléatoire, original, pris dans toute la base de prénoms de la France et du monde, et peu courant (ne pas utiliser de prénoms stéréotypés ou trop communs comme Emma, Maxime, Léa, Jules, John etc), et leurs spécificités ainsi que les particularités de la situation de l'exercice...
-- Placer l'apprenant au centre de l'action.
-- Utiliser, par défaut, quand tu t’adresses à l’apprenant, le vouvoiement, sauf si l’auteur demande autre chose. Dans notre contexte, l’auteur souhaite utiliser le : """{{ formality }}""".
-- Inclure un passage de dialogue direct avec des guillemets et une personne qui prend la parole. Mettre un saut de ligne avant et après le passage de dialogue direct.
-- Être immersif, narratif et clair pour l'apprenant.
-- Indiquer, en dernière phrase, en fonction de l'exercice, le moyen le plus naturel de répondre : soit par la voix, et dans ce cas, préciser, en nombre de secondes, la durée de la réponse attendue ; soit à l'écrit, et dans ce cas, préciser "en quelques points". L'apprenant a toujours le choix d'utiliser son micro ou son clavier pour répondre, mais il doit comprendre, en fonction de l'exercice, quel est le moyen de réponse le plus naturel attendu.
-- Ne pas commencer par "Imagine" ou "Imaginez".
-- Être adapté à une réponse écrite ou orale en quelques phrases.
-- Proposer des situations différentes de celles du contenu du module.
-- Se baser uniquement sur le contenu du module et, si nécessaire, sur les connaissances complémentaires.
+Générer EXACTEMENT 3 situations d’entraînement professionnelles, immersives et variées, directement issues du contenu du module.
 
-Format :
+ANALYSE INTERNE (NE PAS AFFICHER)
 
-Revoie un JSON qui contient :
-'success' : vaut 'true' si tu as pu générer au moins un scenario sinon 'false'
-'trainings' : liste d'objets du type "exercice".
+Avant de générer :
 
-Chaque exercice contient les propriétés suivantes :
-'title' : titre de l'exercice, en moins de 12 mots, qui doit commencer par une majuscule (une majuscule qu'au premier mot, aux prénoms, pas aux autres mots et ne pas mettre de point à la fin), qui doit être original, attractif et qui doit donner envie de faire l'exercice.
-'scenario' : le scénario de l'exercice, en terminant par une consigne claire et une longueur de réponse attendue (quelques points et/ou moins de 30 secondes).
+1. Identifier les notions clés réellement présentes dans :
+- le contenu du module
+- la base de connaissances complémentaire
+2. Sélectionner 3 angles différents pour entraîner la compétence :
+- application opérationnelle
+- interaction / communication
+- analyse / décision
+3. Construire des situations réalistes inspirées du module,
+sans copier un exemple exact,
+mais en transposant les principes dans des contextes crédibles.
+4. Adapter le niveau :
+- débutant → situation fréquente
+- avancé → situation ambiguë ou complexe
+5. Vérifier que chaque scénario :
+- entraîne concrètement la compétence
+- place l’apprenant au centre
+- ne contient aucun indice de réponse
+- respecte la formalité demandée
 
-Renvoie directement et systématiquement ce JSON et rien d'autre. N'écris rien avant et après les accolades du JSON. Fournis le JSON brut sans balises de code après les accolades du JSON. Fournis le JSON brut sans balises de code.
+STRUCTURE OBLIGATOIRE PAR EXERCICE
+
+- 80 à 120 mots au total
+- 60–80 mots : contexte + protagoniste + situation
+- 15–30 mots : dialogue direct (guillemets obligatoires + saut de ligne avant et après)
+- 10–20 mots : consigne claire + format attendu
+
+CONTRAINTES ESSENTIELLES
+
+- Prénoms rares, internationaux, non stéréotypés
+- Protagonistes distincts pour chaque exercice
+- Dialogue obligatoire
+- Saut de ligne avant et après le dialogue
+- Apprenant au centre de l’action
+- Immersion narrative forte mais claire
+- Aucune solution implicite
+- Basé exclusivement sur le contenu fourni
+- Pas de “Imagine” ou “Imaginez”
+- Finir par préciser le mode de réponse :
+- oral → durée en secondes
+- écrit → “en quelques points”
+- L’apprenant peut toujours répondre oralement ou par écrit,
+mais le moyen le plus naturel doit être suggéré.
+
+FORMAT STRICT DE SORTIE
+
+{
+"success": "true",
+"trainings": [
+{
+"title": "...",
+"scenario": "..."
+}
+]
+}
+
+CONTRÔLE FINAL (SILENCIEUX)
+
+- 3 scénarios réellement différents
+- 3 contextes professionnels distincts
+- 3 protagonistes différents
+- Compétence clairement entraînée
+- Respect formalité
+- Respect langue
+- Respect structure
+- JSON strictement valide

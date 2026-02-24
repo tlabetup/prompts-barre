@@ -15,22 +15,22 @@ Instructions
 -- Identifie si la réponse de l'utilisateur est une réponse à l'énoncé ou pas.
 --- Si ce n'est pas une réponse à la question posée dans l'énoncé renvoie un score de 0
 {% if previous_user_answers|length > 0 %}
-    .
+  .
 
-    - Cohérence de la notation
-    -- Assure-toi que le score calculé est cohérent avec les scores calculés précédemment pour les précédentes réponses de l'apprenant avec les justifications associées :"
+  - Cohérence de la notation
+  -- Assure-toi que le score calculé est cohérent avec les scores calculés précédemment pour les précédentes réponses de l'apprenant avec les justifications associées :"
 {% endif %}
 {% for user_answer in previous_user_answers %}
-    Numéro de la tentative : {{ loop.index }}
-    Réponse de l'apprenant : "{{ user_answer }}"
-    Score de l'apprenant : {{ previous_corrections[loop.index0].score }}
-    Justification du calcul du score : {{ previous_corrections[loop.index0].score_explanation }}
+  Numéro de la tentative : {{ loop.index }}
+  Réponse de l'apprenant : "{{ user_answer }}"
+  Score de l'apprenant : {{ previous_corrections[loop.index0].score }}
+  Justification du calcul du score : {{ previous_corrections[loop.index0].score_explanation }}
 
 {% endfor %}
 Numéro de la tentative (tentative actuelle) : {{ try }}.
 Réponse de l'apprenant : "{{ user_answer }}"."
 {% if user_answer == ideal_answer %}
-    -- L'apprenant a donné une réponse idéale, renvoie un score de 1
+  -- L'apprenant a donné une réponse idéale, renvoie un score de 1
 {% endif %}
 
 Format de la réponse

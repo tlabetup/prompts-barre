@@ -1,21 +1,66 @@
-**Contexte de la génération :**
-- Objectif pédagogique : """{{ objectives }}"""
-- Contenu du module : """{{ all_content }}"""
-- Connaissances complémentaires : """{{ knowledge_base | rag(trainer_instructions) }}"""
-- Apprenants qui vont réaliser l'exercice : """{{ target_audience }}"""
-- Instruction de l’auteur : """{{ trainer_instructions }}"""
+Contexte :
 
-**Consigne :**
-Génère, en moins de 12 mots, la formulation d'une compétence professionnelle précise en lien avec le contexte de la génération, et particulièrement avec l’instruction de l’auteur.
+L’auteur définit un contexte professionnel dans lequel entraîner {{ target_audience }}.
 
-**Format attendu :**
+Ta mission est d’identifier le geste métier le plus pertinent au regard :
 
-Revoie un JSON qui contient :
-'success' : vaut 'true' si tu as trouvé une compétence professionnelle, sinon 'false'
-'error' : vaut 'true' si l'on tombe sur l'un des cas suivants :
-- si tu n'as pas trouvé de compétence professionnelle
-- si la compétence professionnelle n'a pas de lien direct avec le contenu du module encadré par """ ou avec les connaissances complémentaires encadré par """
-- si la compétence professionnelle n'a pas de lien avec l'instruction de l'auteur
-'professional_skill' : correspond à la compétence reformulée selon l'instruction et qui commence systématiquement par une majuscule et un verbe à l’infinitif.
+- de l’objectif pédagogique : """{{ objectives }}"""
+- du contenu réel du module : """{{ all_content }}"""
+- des connaissances complémentaires : """{{ knowledge_base | rag(trainer_instructions) }}"""
+- de l’instruction précise de l’auteur : """{{ trainer_instructions }}"""
 
-Renvoie directement et systématiquement ce JSON et rien d'autre. N'écris rien avant et après les accolades du JSON. Fournis le JSON brut sans balises de code.
+DÉFINITION ATTENDUE
+
+Une compétence professionnelle ici correspond à :
+
+- Un geste métier concret
+- Une action professionnelle observable
+- Mobilisable dans une situation réelle
+- Directement entraînable
+- Directement évaluable
+
+Ce n’est PAS :
+
+- Une qualité personnelle
+- Une posture vague
+- Une compétence générique
+- Un savoir théorique
+
+EXIGENCES
+
+La compétence générée doit :
+
+- Être directement liée à l’intention de l’auteur
+- Être présente dans le module ou la base complémentaire
+- Être formulée en moins de 12 mots
+- Commencer par un verbe à l’infinitif
+- Commencer par une majuscule
+- Être précise et non générique
+- Être mobilisable dans un exercice concret
+
+ANALYSE INTERNE (NE PAS AFFICHER)
+
+1. Identifier l’intention réelle de l’auteur.
+2. Vérifier si elle est précise, large ou incohérente.
+3. Sélectionner le geste métier correspondant.
+4. Vérifier :
+- actionnable
+- observable
+- entraînable
+- ≤ 12 mots.
+
+Si aucun geste métier précis ne peut être identifié → error = true.
+
+LANGUE
+
+- Rédige exclusivement en """{{ language }} ({{ language_code }})"""
+- Respect strict des règles syntaxiques et typographiques.
+- Applique les consignes rédactionnelles : """{{ module_instructions }}"""
+
+FORMAT STRICT DE SORTIE
+
+{
+"success": "true" | "false",
+"error": "true" | "false",
+"professional_skill": "..."
+}

@@ -1,8 +1,86 @@
-Crée, en {{ language }} ({{ language_code }}), une nouvelle explication à la question, différente de l'explication existante ("""{{ question.explanation_content }}""") et qui s'inspire principalement, si c'est possible, du contenu de la formation : """{{ input_content }}""". Si tu manques d'information pour générer une explication précise et de qualité, tu peux utiliser ce complément en base de connaissances : """{{ knowledge_base | rag(question.good_answers | join(';') , 'mmr' , 4000) }}.""". Mais ne cherche pas ailleurs.
+CONTEXTE DISPONIBLE
 
+Contenu pédagogique de la formation (source principale) :
+"""{{ input_content }}"""
 
-Le JSON doit venir sous le format suivant :
+Question posée à l’apprenant :
+"""{{ question.title }}"""
 
-'explanation_title' : un titre, en {{ language }} ({{ language_code }}), de 10 mots ou moins qui résume cette explication, différent de la bonne réponse, qui illustre bien le contenu de l'explication et qui n'explicite pas qu'il s'agit d'une explication. Mets une majuscule à la première lettre du premier mot, et pas de point à la fin de l'explication.
+Bonne réponse :
+{% for good_answer in question.good_answers %}
+  - {{ good_answer }}
+{% endfor %}
 
-'explanation_content' : une explication, en 400 caractères, à la question posée ({{ question.title }}) . L'explication doit être complémentaire aux contenus de la formation mentionnés avant et doit être formulée sans aucun jugement de valeur afin de permettre de comprendre la bonne réponse. Cette explication doit s'inspirer, si possible, en priorité du contenu de cours associé à cette question : """{{ input_content }}""". Ne commence jamais l'explication par "Selon la formation,...".
+Mauvaises réponses proposées :
+{% for bad_answer in question.bad_answers %}
+  - {{ bad_answer }}
+{% endfor %}
+
+{% if question.explanation_content %}
+  Explication déjà existante (à NE PAS reformuler) :
+  """{{ question.explanation_content }}"""
+{% endif %}
+
+Base de connaissances complémentaire autorisée (uniquement si nécessaire) :
+"""{{ knowledge_base | rag(question.good_answers | join(';') , 'mmr', 4000) }}"""
+
+---
+
+MISSION
+
+Génère un NOUVEAU feedback pédagogique affiché après la réponse à la question.
+
+Ce feedback doit :
+- être différent de toute explication existante,
+- aider à comprendre POURQUOI la bonne réponse est juste,
+- éclairer le raisonnement attendu,
+- mettre en lumière une distinction, un enjeu ou un piège courant.
+
+---
+
+INTENTION PÉDAGOGIQUE DE L’EXPLICATION
+
+L’explication doit :
+- reformuler le sens de la bonne réponse,
+- contextualiser la question dans une logique de formation adulte,
+- montrer ce que l’apprenant doit retenir ou ajuster dans sa compréhension.
+
+Elle ne doit JAMAIS :
+- juger la réponse de l’apprenant,
+- dire “la bonne réponse est…”,
+- répéter mot pour mot le contenu du cours,
+- introduire une notion absente du contenu fourni.
+
+---
+
+RÈGLES POUR LE TITRE DE L’EXPLICATION
+
+- 10 mots maximum
+- Porte une IDÉE CLÉ (enjeu, distinction, point de vigilance)
+- Différent de la bonne réponse
+- Ne mentionne jamais qu’il s’agit d’une “explication”
+- Majuscule à la première lettre du premier mot
+- Aucun point final
+
+---
+
+RÈGLES POUR LE CONTENU DE L’EXPLICATION
+
+- 400 caractères maximum
+- Texte rédigé, fluide, pédagogique
+- S’adresse directement à l’apprenant
+- Met l’accent sur le “pourquoi” plutôt que sur le “quoi”
+- Basé prioritairement sur :
+"""{{ input_content }}"""
+- Utilise la base complémentaire uniquement si nécessaire
+- Ne commence jamais par :
+“Selon la formation…”, “Dans le cours…”, “La bonne réponse est…”
+
+---
+
+FORMAT DE SORTIE — JSON STRICT UNIQUEMENT
+
+{
+"explanation_title": "...",
+"explanation_content": "..."
+}

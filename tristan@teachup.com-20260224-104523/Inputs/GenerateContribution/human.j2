@@ -1,33 +1,87 @@
-{% set kb1 = content_instructions %}.
-{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr' , 4000) %}.
+{% set kb1 = content_instructions %}
+{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr', 4000) %}
 
-Rédige un contenu pédagogique au format JSON suivant :
+Tu es un expert en ingénierie pédagogique.
+Ta mission est de générer un mur collaboratif pédagogique favorisant l’apprentissage entre pairs, parfaitement intégré au module existant.
 
-Rédige, en {{ language }} ({{ language_code }}), une question de sondage, des réponses possibles et une explication associée, qui permettent à l'apprenant de donner son opinion sur un élément intéressant en lien avec un élément particulier de cette partie de la formation : ({{ content_instructions }}).
+---
 
-L’auteur souhaite que tu respectes ces instructions de forme : {{ form_instructions }}.
-Ta base de connaissances est ici : """{{ kb1 }}""" et ici : """{{ kb2 }}"""
+DONNÉES À PRENDRE EN COMPTE (PRIORITÉ DÉCROISSANTE)
 
-Au départ, l'auteur a demandé à générer une question de contribution avec cette instruction : """{{ generation_instructions }}""". Fais en sorte de suivre ce que tu comprends de son intention à travers cette instruction.
+1. Instructions de génération de l’auteur
+"""{{ generation_instructions }}"""
 
-Respecte ces instructions de forme : {{ form_instructions }}.
+2. Instructions pédagogiques du module
+"""{{ module_instructions }}"""
 
-Le JSON doit venir sous le format suivant :
+3. Objectifs pédagogiques
+{{ objectives }}
 
-'title' : invente la question ouverte, en moins de 60 mots (sauf indications contraires dans les instructions de forme), qui va être proposée aux apprenants. Le premier mot doit avoir une majuscule à la première lettre. Termine par un signe de ponctuation, et respecte parfaitement les instructions rédactionnelles demandées. Cette question NE DOIT PAS être une question de connaissance (une question de connaissance est une question avec des réponses correctes et incorrectes).
+4. Contenu principal – source de vérité
+"""{{ kb1 }}"""
 
-Cette question ne doit être complètement différente des questions déjà posées dans la formation et doit porter sur un contenu qui n’a pas déjà été abordé dans la formation.
+5. Connaissances complémentaires (clarification uniquement)
+"""{{ kb2 }}"""
 
-En gardant en tête que tu t’adresses à {{ target_audience }}, la question posée doit être dans l’un des formats suivants :
+6. Contexte pédagogique existant
+- Contenu précédent :
+"""{{ previous_input_content }}"""
+- Ensemble du module :
+"""{{ all_content }}"""
 
-a) Partager une expérience de terrain : "Partagez votre expérience ! La dernière fois que… comment avez-vous… » ou « Partagez une anecdote pour illustrer… ».
-b) Donner son avis : « Selon vous, pourquoi… » ou « Selon vous, comment… » ;
-c) Proposer une mise en situation : « Que diriez-vous à un client qui vous dit… » ou « Que répondriez-vous à votre manager s’il vous… »
-d) Faire inventer : « Inventez la suite : «… » »
-e) Demander une photo : « Partagez la photo de… »
+---
 
-La question générée doit donner très envie aux participants de voir les réponses des autres participants qui ont répondu avant eux afin de les aider à atteindre l’objectif pédagogique.
+FORMAT DE SORTIE (JSON STRICT)
 
-'explanation_title' : un titre de 15 mots ou moins. Mets une majuscule uniquement à la première lettre du premier mot. Ce titre ne doit pas comporter de signe de ponctuation et doit parfaitement respecter les règles de syntaxe et d'orthographe de la langue {{ language }} ({{ language_code }}). Dans le titre, remercie le participant.
+{
+"title": "...",
+"explanation_title": "...",
+"explanation_content": "..."
+}
 
-'explanation_content' : rédige en une phrase l'importance de partager ses bonnes pratiques afin de faciliter l'apprentissage entre pairs et l'importance de l'entraîde dans la montée en compétence (en particulier pour la cible de la formation si elle est explicitée : {{ target_audience }}).
+---
+
+RÈGLES DE GÉNÉRATION
+
+1. TITLE — QUESTION DU MUR COLLABORATIF
+- Question ouverte, jamais une question de connaissance.
+- Moins de 60 mots (sauf indication contraire dans {{ form_instructions }}).
+- Commence par une majuscule et se termine par une ponctuation.
+- Porte sur un enjeu réel, une situation, une tension liée au thème.
+- Doit donner très envie de découvrir les réponses des autres participants.
+- Choisis le format le plus pertinent parmi :
+  a) partage d’expérience ;
+  b) avis personnel ;
+  c) mise en situation ;
+  d) projection créative ;
+  e) partage d’image.
+
+2. EXPLANATION_TITLE
+- 15 mots maximum.
+- Majuscule uniquement au premier mot.
+- Aucun signe de ponctuation.
+- Remercie explicitement l’apprenant pour sa contribution.
+- Respect strict du tutoiement ou du vouvoiement demandé.
+
+3. EXPLANATION_CONTENT
+- Texte affiché uniquement APRÈS la réponse de l’apprenant.
+- 1 à 3 phrases maximum.
+- Ne jamais aider à répondre.
+- Ne jamais annoncer la suite du module.
+- Sert à :
+  - reconnaître l’acte de contribution ;
+  - donner du sens à la diversité des réponses ;
+  - souligner l’enjeu pédagogique du sujet.
+- Ton réflexif, ancré dans le présent.
+- Fidélité totale au contenu autorisé.
+- Mode d’adresse strictement conforme à {{ module_instructions }}.
+
+---
+
+CONTRÔLE FINAL (SILENCIEUX)
+Avant de répondre :
+- Vérifie le respect strict du tutoiement / vouvoiement.
+- Vérifie l’absence totale de projection future.
+- Vérifie la cohérence narrative avec le module.
+- Vérifie la fidélité absolue aux sources.
+- Vérifie que le mur favorise réellement le social learning.

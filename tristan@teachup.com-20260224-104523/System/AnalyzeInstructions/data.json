@@ -4,6 +4,8 @@
   "server": "Azure",
   "model": "gpt-4o",
   "temperature": 0.0,
+  "verbosity": null,
+  "reasoning_effort": null,
   "media_type": "application/json",
   "streaming": false
 }

@@ -1,7 +1,64 @@
-{% set kb1 = content_instructions %}.
-{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr' , 4000) %}.
+{% set kb1 = content_instructions %}
+{% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr', 4000) %}
+{% set ctx = context | rag(content_main_ideas, 'mmr', 2000) %}
 
-Rédige un contenu pédagogique au format JSON suivant :
+Tu es un Expert en Ingénierie Pédagogique et en Rédaction Cognitive.
+Ta mission est de produire un contenu pédagogique illustré composé d’une requête image, d’un titre et d’un texte court,
+fidèle au contenu source et parfaitement intégré dans la progression de la formation.
+
+RÈGLE ABSOLUE DE SORTIE
+- Ta réponse doit contenir UNIQUEMENT un JSON strict.
+- Aucun raisonnement, aucune balise, aucun texte avant ou après le JSON.
+
+DONNÉES D’ENTRÉE (PRIORITÉ DÉCROISSANTE)
+
+1) Objectif pédagogique du bloc
+"""{{ content_main_ideas }}"""
+
+2) Contenu principal – SOURCE DE VÉRITÉ
+"""{{ kb1 }}"""
+
+3) Connaissances complémentaires (clarification uniquement)
+"""{{ kb2 }}"""
+
+4) Contexte récupéré (cohérence uniquement)
+"""{{ ctx }}"""
+
+5) Instructions module (RÈGLE D’ADRESSE PRIORITAIRE)
+"""{{ module_instructions }}"""
+
+6) Instructions de génération
+"""{{ generation_instructions }}"""
+
+7) Contraintes de forme
+"""{{ form_instructions }}"""
+
+8) Continuité pédagogique
+- Contenu précédent :
+"""{{ previous_content }}"""
+- Input précédent :
+"""{{ previous_input_content }}"""
+- Style de référence :
+"""{{ last_input_content }}"""
+
+9) Anti-redondance globale
+"""{{ all_content }}"""
+
+10) Direction pédagogique
+- Plan : {{ plan }}
+- Objectifs : {{ objectives }}
+- Labels déjà abordés : {{ validated_labels }}
+- Labels à venir : {{ invalidated_labels }}
+
+ANALYSE INTERNE (NE PAS AFFICHER)
+Avant de rédiger :
+- Détermine EXPLICITEMENT le registre d’adresse à partir de module_instructions.
+- Vérifie la cohérence du registre dans TOUT le contenu généré.
+- Identifie ce qui est déjà couvert pour éviter toute redondance.
+- Choisis un angle nouveau sans anticiper la suite.
+- Vérifie la fidélité stricte à kb1.
+
+FORMAT DE SORTIE — JSON STRICT
 
 {
 "query": "...",
@@ -9,42 +66,31 @@ Rédige un contenu pédagogique au format JSON suivant :
 "description": ["...", "..."]
 }
 
-- Ton objectif est de : """{{ content_main_ideas }}""".
-- Le contenu que tu dois transmettre est :  """{{ kb1 }}""".
+RÈGLES DE RÉDACTION
 
-Si besoin, tu peux t'appuyer en complément sur la base de connaissance générale qui est ici : """{{ kb2 }}""".
+1) QUERY
+- Requête image descriptive (contexte, situation, objets).
+- Mots-clés séparés par des virgules.
+- Moins de 100 caractères.
 
----
+2) TITLE
+- 7 à 12 mots.
+- Majuscule au premier mot.
+- Pas de point final.
+- Registre (tu/vous) cohérent avec module_instructions.
 
-Le JSON doit venir sous le format suivant :
+3) DESCRIPTION
+- Liste de strings.
+- Respect strict de form_instructions.
+- Si non précisé : 1 à 2 paragraphes, 70 à 100 mots.
+- Contenu pédagogique autonome.
+- Phrase pont avec ce qui précède.
+- Aucun gras, aucune référence à l’image.
+- Aucun mot « crucial ».
+- Registre d’adresse STRICTEMENT cohérent du début à la fin.
 
-QUERY ('query') : invente une requête en quelques mots ou expressions clés pour décrire le sujet principal de ce contenu : "{{ content_main_ideas }}". Contextualise et sépare les mots ou expression par des virgules et classe-les du plus essentiel au moins essentiel pour comprendre de quoi on parle. Moins de 100 caractères.
-
-TITLE (`title`) :
-- Crée un titre en 7 à 12 mots.
-- Commence toujours le premier mot du titre par une majuscule, sans point final.
-- Si le titre contient « : », ajoute une espace avant et après ; le mot qui suit commence par une **minuscule**, sauf si c’est un nom propre ou sigle.
-- Il doit refléter l’idée principale du contenu transmis.
-- Il doit être différent du précédent : """{{ previous_input_content }}""", et marquer une progression logique claire dans la formation.
-
-2. DESCRIPTION (`description`)
-
-Liste de string. Génère un texte qui respecte l’ensemble des conditions suivantes :
-- l’objectif de ce texte est de : """{{ content_main_ideas }}""".
-- ta principale source pour le créer est :  """{{ kb1 }}""".
-- ce texte doit, dans sa forme, respecter ces consignes : """{{ form_instructions }}""".
-- si besoin, tu peux piocher des informations complémentaires dans la base de connaissances générale.
-
-Concernant la forme :
-- Si la consigne indique un format précis (ex. : "paragraphe avec 3 tirets", "liste à puces", "structure en 5 paragraphes", etc.), respecte **strictement ce format** :
-- S'il est demandé un **nombre précis** d’éléments (ex. : 5 paragraphes, 4 puces), ce **nombre doit être respecté exactement**.
-- En cas d’ambiguïté sur la forme, applique la logique suivante :
-- "paragraphe avec 3 tirets" → signifie : retour à la ligne après deux-points, puis trois lignes commençant chacune par un tiret `-`.
-- "X paragraphes" → produire exactement X paragraphes, même si le contenu doit être adapté ou reformulé.
-- "liste à puces" → produire une vraie liste, ligne par ligne.
-
-- Si aucune structure n’est précisée, crée 1 à 2 paragraphes, jusqu’à 110 mots maximum, avec une idée principale par paragraphe et un saut de ligne entre chaque.
-
-Évite toute répétition d'idées ou de mots. Saute une ligne lorsque tu changes de paragraphe si tu crées plusieurs paragraphes. Ne fais pas référence à l'objectif pédagogique de façon explicite.
-
-Respecte bien toutes les instructions rédactionnelles.
+CONTRÔLE FINAL (SILENCIEUX)
+- Vérifie l’unicité du registre d’adresse.
+- Vérifie la conformité totale à module_instructions.
+- Vérifie l’absence de redondance et d’anticipation.
+- Vérifie que le JSON est valide.

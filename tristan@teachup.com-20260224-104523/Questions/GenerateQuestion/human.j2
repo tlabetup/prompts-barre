@@ -1,168 +1,117 @@
-{# liste de toutes les questions #}
+{# Historique des questions existantes #}
 {% set all_questions = other_questions + input_questions %}
 
-{# liste de toutes les bonnes réponses confondues #}
+{# Historique des bonnes réponses existantes #}
 {% set all_good_answers = all_questions | map(attribute='good_answers') | list %}
 
-{# liste de toutes les mauvaises réponses confondues #}
+{# Historique des mauvaises réponses existantes #}
 {% set all_bad_answers = all_questions | map(attribute='bad_answers') | list %}
 
-**Contexte de création**
+CONTEXTE DE GÉNÉRATION
 
-- Objectifs de la formation :
+Objectifs pédagogiques de la formation :
 {% for objective in objectives %}
-  {{ loop.index }} - {{ objective }}
+  - {{ objective }}
 {% endfor %}
 
-- Instruction de l’auteur : "{{ subject }}"
+Instruction explicite de l’auteur (PRIORITAIRE) :
+"""{{ subject }}"""
 
-- Contenu de la formation :
+Contenu pédagogique de référence (source de vérité) :
 """{{ input_content }}"""
 
-- Contenus clés mis en avant :
+Éléments clés mis en avant :
 """{{ highlight_content }}"""
 """{{ bold_content }}"""
 
-- Questions déjà posées :
+Questions déjà posées (anti-redondance stricte) :
 {% for question in all_questions %}
-  -- La question de type QCM est : "{{ question.title }}"
-  -- La ou les bonnes réponses pour cette question sont :
-  {% for good_answer in question.good_answers %}
-    --- {{ good_answer }}
-  {% endfor %}
-  -- La ou les mauvaises réponses pour cette question sont :
-  {% for bad_answer in question.bad_answers %}
-    --- {{ bad_answer }}
-  {% endfor %}
-
+  - {{ question.title }}
 {% endfor %}
 
 ---
 
-**Stratégie de génération**
+STRATÉGIE DE GÉNÉRATION
 
-### 1. Traitement prioritaire de l’instruction de l’auteur qui est : """{{ subject }}"""
+1. Intention pédagogique
+- Pars de l’instruction de l’auteur ({{ subject }}).
+- Identifie le raisonnement, la distinction ou le point de vigilance
+  que l’apprenant doit réellement comprendre.
 
-- L’instruction est le **point de départ principal** de la génération.
-- Elle peut contenir :
-  - Un sujet ou thème ciblé
-  - La ou les bonnes réponses attendues à la question
-  - Une demande implicite de posture (“Comparer…”, “Vérifier que…”, “Faire la distinction entre…”)
-  - Une formulation directe d’une question
-- Tu dois, en fonction de ce que tu comprends que l'auteur souhaite faire à partir de son instruction :
-  - Générer une question pertinente, tout en respectant les règles de forme attendues
+2. Construction cognitive
+- Déduis d’abord la bonne réponse la plus pertinente pédagogiquement.
+- Formule ensuite la question pour que cette réponse soit la seule possible.
+- Construis deux mauvaises réponses :
+  - plausibles,
+  - proches cognitivement,
+  - mais clairement fausses.
 
-### 2. Choix du sujet de la question
-
-- Si l'auteur a bien donné une instruction ("""{{ subject }}"""), la question doit en découler **directement** (forme et fond).
-- Si l'instruction de l'auteur, qui est """{{ subject }}""", est vide, alors choisis un sujet utile, non traité, à partir de """{{ input_content }}""".
-
----
-
-### 3. Double contrôle de redondance des questions
-
-Tu dois impérativement effectuer deux vérifications :
-
-#### A. Contrôle exact :
-- Aucune question générée ne doit **être identique** à une question déjà présente dans cette liste :
-{% for question in all_questions %}
-  -- {{ question.title }}
-{% endfor %}
-
-#### B. Contrôle sémantique :
-- Tu dois aussi **éviter toute question similaire dans le fond**, même si la formulation est différente.
-- Exemple :
-- Question déjà posée : “Quel est le rôle du tuteur ?”
-- Éviter : “En quoi consiste la mission du tuteur ?”
-
-- Si une question générée existe déjà ou est trop proche : **change de sujet ou reformule complètement.**
+3. Anti-redondance
+- La question ne doit être ni identique ni équivalente
+  à une question déjà posée.
+- La bonne réponse ne doit jamais apparaître dans :
+"""{{ all_good_answers }}"""
 
 ---
 
-### 4. Vérification des réponses déjà données
+FORMULATION DE LA QUESTION
 
-- La **bonne réponse** générée ne doit **jamais figurer** dans la liste suivante :
-{% for good_answer in all_good_answers %}
-            -- {{ good_answer }}
-{% endfor %}
-- Même si la question est nouvelle, une réponse déjà donnée rend la génération invalide → recommencer avec une réponse différente ou une autre question.
-
----
-
-### 5. Formulation de la question
-
-- Commencer obligatoirement par :
-`Combien`, `Quel`, `Quelle`, `Quand`, `À quelle date`, `Qui`, `Comment`, `À quelle fréquence`, `Où`, `Pourquoi`, `Depuis quand`, `En quelle année`, `À quel point`, `De quelle manière`, `Avec qui`, `Avec quoi`
+- Commence par un starter interrogatif autorisé
 - Moins de 25 mots
-- Commencer par une **majuscule**, se terminer par un **point d’interrogation**
-- En français : ajouter une **espace insécable** avant `?`
-- Si l’instruction contient des mots-clés ou notions précises, **réutilise-les dans la question** autant que possible
-- La question ne doit jamais comporter la bonne réponse attendue
+- Majuscule initiale
+- Point d’interrogation final
+- La bonne réponse n’apparaît jamais dans la question
 
 ---
 
-### 6. Contenu pédagogique de la question
+RÉPONSES
 
-- Une seule bonne réponse possible
-- Niveau cognitif cohérent avec l’instruction
-- Doit être claire, fermée, stimulante et **utile pour progresser**
+Bonne réponse :
+- UNE seule
+- Max 50 caractères
+- Sans ponctuation finale
+- Naturelle et explicite
+- Issue exclusivement du contenu
 
----
-
-### 7. Réponses
-
-**Bonne réponse** :
-- Précise, explicite, **max 50 caractères**, sans point final
-- Si l'instruction de l'auteur met en avant la bonne réponse attendue, mets-là ici
-- Jamais issue de de la liste suivante
-{% for good_answer in all_good_answers %}
-  -- {{ good_answer }}
-{% endfor %}
-- Forme naturelle, commence par un article, un verbe à l’infinitif, un pronom ou “En…”
-- Générer **une seule** bonne réponse
-- Ne doit jamais figurer dans la question posée
-
-**Mauvaises réponses** :
-- Deux, courtes (max 10 mots), de même structure grammaticale que la bonne
-- Doivent être pédagogiquement intéressantes (pièges fréquents ou proches mais erronés)
+Mauvaises réponses :
+- EXACTEMENT deux
+- Courtes
+- Même structure grammaticale que la bonne
+- Plausibles mais fausses
 
 ---
 
-### 8. Explication
+EXPLICATION PÉDAGOGIQUE (POINT CLÉ DE QUALITÉ)
 
-- **Titre** : moins de 15 mots, informatif, pas de reprise directe de la bonne réponse
-- **Contenu** : max 400 caractères
-  - S’appuie exclusivement sur :
-    - """{{ input_content }}"""
-    - Un RAG basé sur :
-      "Fournis une explication pédagogique simple sur le sujet suivant : {{ subject if subject else 'un concept clé du contenu' }}"
+Titre de l’explication :
+- Moins de 15 mots
+- Exprime l’IDÉE CLÉ à comprendre
+- Donne du sens (pas une reformulation de la réponse)
+- Peut expliciter un enjeu, une distinction, un piège courant
+
+Contenu de l’explication :
+- Max 400 caractères
+- Reformule le raisonnement attendu
+- Explique POURQUOI cette question est importante
+- Met en lumière :
+- une confusion fréquente,
+- une distinction essentielle,
+- ou un enjeu métier concret
+- S’adresse directement à l’apprenant
+- S’appuie exclusivement sur le contenu fourni
+- Aucun ajout de notion extérieure
 
 ---
 
-Tout doit être rédigé en **{{ language }} ({{ language_code }})**, dans un style clair, rigoureux et adapté.
-Tout le contenu du JSON final doit être rédigé **exclusivement en {{ language }} ({{ language_code }})**.
-- Aucun mot dans une autre langue
-- Style et tournure conformes à la langue définie
+FORMAT DE SORTIE — JSON STRICT UNIQUEMENT
 
----
-
-**Format attendu**
-Uniquement un JSON **valide**. Aucune explication autour.
-
-Human Prompt (output attendu)
-
-```json
 {
-    "error": false,
-    "question": {
-        "title": "Quelle est la différence entre entretien annuel et entretien professionnel ?",
-        "good_answers": ["L’entretien professionnel vise l’évolution des compétences"],
-        "bad_answers": [
-            "L’entretien annuel est un rendez-vous informel",
-            "L’entretien professionnel sert à évaluer la performance"
-        ],
-        "explanation_title": "Des objectifs bien distincts",
-        "explanation_content": "L’entretien professionnel se projette sur l’avenir du salarié et ses compétences, tandis que l’entretien annuel sert à évaluer son activité passée."
-    }
+"error": false,
+"question": {
+"title": "...",
+"good_answers": ["..."],
+"bad_answers": ["...", "..."],
+"explanation_title": "...",
+"explanation_content": "..."
 }
-```
+}
