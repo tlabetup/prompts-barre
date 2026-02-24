@@ -20,15 +20,15 @@
 
 CONTENU AUTORISÉ — SOURCE UNIQUE DE VÉRITÉ
 
-- Si deep_rag = false :
-La base de connaissances d'où tirer les questions ne doit être QUE : 
-"""{{ input_content }}"""
-
-- Si deep_rag = true :
+{% if deep_rag %}
 La base de connaissances d'où tirer les questions est composée de :
 """{{ kb }}"""
 et de : 
 """{{ ctx }}""".
+{% else %}
+La base de connaissances d'où tirer les questions ne doit être QUE : 
+"""{{ input_content }}"""
+{% endif %}
 
 
 Il est strictement interdit :
