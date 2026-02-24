@@ -1,86 +1,72 @@
-CONTEXTE DISPONIBLE
-
-Contenu pédagogique de référence :
-"""{{ input_content }}"""
-
-Question QCM :
-"""{{ question.title }}"""
-
-Bonne réponse (référence absolue) :
+Contexte :
+- Le contenu de la formation est : """{{ input_content }}"""
+- La question de type QCM est : "{{ question.title }}"
+- La ou les bonnes réponses sont :
 {% for good_answer in question.good_answers %}
-  - {{ good_answer }}
+  -- {{ good_answer }}
 {% endfor %}
 
-Mauvaises réponses déjà utilisées (à EXCLURE) :
+- La ou les mauvaises réponses déjà proposées sont :
 {% for bad_answer in question.bad_answers %}
-  - {{ bad_answer }}
+  -- {{ bad_answer }}
 {% endfor %}
 
-Base de connaissances autorisée :
-"""{{ knowledge_base | rag(question.title, 'similarity', 2000) }}"""
-
-Contexte pédagogique complémentaire :
-"""{{ context | rag(question.title, 'similarity', 2000) }}"""
+'bad_answers' : génère deux **réponses fausses**, strictement différentes de celles déjà proposées.
 
 ---
 
-MISSION
+**Objectif pédagogique**
 
-Génère EXACTEMENT deux nouvelles mauvaises réponses pour cette question.
+Pour générer les deux 
+- Inspire-toi de la base de connaissances : 
+"""{{ knowledge_base | rag(question.title, 'similarity' , 2000) }}"""	
 
-Ces réponses doivent :
-- être strictement fausses,
-- être différentes de toutes celles déjà proposées,
-- créer un doute intellectuel réaliste chez la cible.
+- Ou du contenu de la formation : 
+"""{{ context | rag(question.title, 'similarity' , 2000) }}"""
 
----
-
-STRATÉGIE DE GÉNÉRATION (OBLIGATOIRE)
-
-Pour chaque mauvaise réponse :
-- pars d’un raisonnement proche de la bonne réponse,
-- introduis UNE erreur claire :
-- confusion de périmètre,
-- glissement conceptuel,
-- généralisation abusive,
-- amalgame fréquent,
-- mauvaise interprétation d’un principe.
-
-Ne fais JAMAIS :
-- une négation grossière de la bonne réponse,
-- une réponse hors sujet,
-- une réponse trop vague.
+Les réponses doivent :
+- Être **fausses**, mais **subtilement trompeuses**
+- Semer le doute chez un public expérimenté, en exploitant :
+  - des **idées reçues crédibles**
+  - des **connaissances partielles ou déformées**
+  - des **faux amis conceptuels**
+  - des **glissements terminologiques**
+- Favoriser une **discrimination fine** entre vrai et faux, en créant un **contraste intellectuellement stimulant** avec la bonne réponse.
 
 ---
 
-CONTRAINTES FORMELLES STRICTES
+**Contraintes formelles**
 
 Les deux mauvaises réponses doivent :
-- contenir moins de 10 mots,
-- avoir EXACTEMENT la même structure grammaticale que la bonne réponse :
-  - infinitif ↔ infinitif
-  - groupe nominal ↔ groupe nominal
-  - article + nom ↔ article + nom
-- commencer de la même manière si pertinent (article, verbe, pronom),
-- ne pas contenir la bonne réponse, même partiellement,
-- ne pas se terminer par un point si la bonne réponse n’en a pas.
+- Contenir **moins de 10 mots**
+- Avoir une **forme grammaticale identique** à la bonne réponse (ex. : infinitif, article défini, nominalisation, majuscule ou pas à la première lettre…)
+- Être **cohérentes stylistiquement** avec la bonne réponse
+- Ne **jamais se terminer par un point**, si la bonne réponse n’en a pas
 
 ---
 
-RAPPEL CRITIQUE
+**Langue**
 
-Si une mauvaise réponse :
-- peut être considérée comme correcte dans certains contextes,
-- ou repose sur une interprétation défendable,
-→ elle est invalide et doit être remplacée.
+- Réponses strictement rédigées en {{ language }} ({{ language_code }})
+- Respect du **registre adapté au public** (ton, complexité, vocabulaire)
 
 ---
 
-FORMAT DE SORTIE — JSON STRICT UNIQUEMENT
+**Conseils de génération et base d'inspiration**
 
+- Évite les erreurs triviales ou absurdes
+- Privilégie des **leurres fins, proches mais conceptuellement erronés**
+- Inspire-toi de **confusions authentiques observées chez les professionnels**
+
+---
+
+Répond uniquement avec ce format JSON :
+
+```json
 {
-"bad_answers": [
-"...",
-"..."
-]
+    "bad_answers": [
+        "Première mauvaise réponse",
+        "Deuxième mauvaise réponse"
+    ]
 }
+```

@@ -2,7 +2,7 @@
   "description": "Utilise ce prompt pour générer une question, avec la bonne réponse, les mauvaises réponses et l'explication.",
   "obsolete": false,
   "server": "Azure",
-  "model": "Mistral-Large-3",
+  "model": "gpt-4o",
   "temperature": 0.2,
   "verbosity": null,
   "reasoning_effort": null,
