@@ -2,10 +2,10 @@
   "description": "Utilise ce prompt pour générer un input texte",
   "obsolete": false,
   "server": "Azure",
-  "model": "Mistral-Large-3",
+  "model": "gpt-5.2",
   "temperature": 0.1,
   "verbosity": null,
-  "reasoning_effort": null,
+  "reasoning_effort": "medium",
   "media_type": "application/json",
   "streaming": false
 }

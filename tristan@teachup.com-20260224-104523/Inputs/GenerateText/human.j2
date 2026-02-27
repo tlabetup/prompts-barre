@@ -1,77 +1,35 @@
 {% set kb1 = content_instructions %}
 {% set kb2 = knowledge_base | rag(content_main_ideas, 'mmr', 4000) %}
 
-Tu es un Expert en Ingénierie Pédagogique et en Rédaction Cognitive.
+Produis un contenu de formation fidèle aux sources et conforme aux instructions de l'auteur.
+Toute instruction de l'auteur doit être respectée exactement.
 
-Ta mission est de produire un contenu de formation fidèle au contenu source, conforme aux instructions de l’auteur, intégré dans une progression pédagogique cohérente, et optimisé pour une lecture rapide à faible charge cognitive.
+DONNÉES D'ENTRÉE
 
-RÈGLE ABSOLUE DE SORTIE
-- Réponds uniquement avec un JSON strict.
-- Aucun texte hors JSON.
-- N'invente JAMAIS un contenu qui n'est pas dans la base de connaissances et n'utilise pas de formulations approximatives sur les éléments en lien avec le fond. Au plus que tu peux, rédige en utilisant des termes qui SONT dans la base de connaissances autorisée.
-
-DONNÉES D’ENTRÉE
-
-Objectif pédagogique du bloc
+Objectif pédagogique du bloc :
 """{{ content_main_ideas }}"""
 
-Instructions explicites de l’auteur (prioritaires)
+Instructions de l'auteur :
 """{{ generation_instructions }}"""
 
-Contenu source principal (vérité pédagogique)
+Contenu source principal :
 """{{ kb1 }}"""
 
-Connaissances complémentaires autorisées (clarification uniquement)
+Connaissances complémentaires :
 """{{ kb2 }}"""
 
-Contenu précédent
-"""{{ previous_input_content }}"""
-
-Contenu global du module
-"""{{ all_content }}"""
-
-Contraintes de forme
-"""{{ form_instructions }}"""
-
-PRINCIPE D’OBÉISSANCE
-- Si {{ generation_instructions }} impose une structure, un nombre de paragraphes ou un format précis → respecte-le EXACTEMENT.
-- Sinon → applique les règles de concision par défaut définies dans le System.
-
-NARRATION PÉDAGOGIQUE ATTENDUE
-- Tu expliques.
-- Tu contextualises avant de donner un chiffre.
-- Tu aides à comprendre le “pourquoi”.
-- Tu guides le raisonnement de l’apprenant.
-- Tu privilégies la clarté à l’exhaustivité.
+Contenu précédent du module :
+"""{{ previous_content }}"""
 
 FORMAT DE SORTIE
 
 {
-"title": "...",
-"content": ["...", "..."],
-"key_phrases": ["...", "..."]
+  "title": "Titre court, majuscule au premier mot, sans point final",
+  "content": ["paragraphe 1", "paragraphe 2"],
+  "key_phrases": ["expression 1", "expression 2"]
 }
 
-RÈGLES DE RÉDACTION
-
-TITLE
-- 7 à 12 mots
-- Majuscule au premier mot
-- Sans point final
-- Cohérent avec le bloc précédent
-
-CONTENT
-- Structure conforme à {{ generation_instructions }} si précisée
-- Sinon :
-- 1 à 2 paragraphes
-- 4 à 8 phrases
-- phrases ≤ 22 mots
-- une idée par phrase
-- Ton pédagogique, narratif et explicatif
-- Intégrer les données dans des phrases explicatives
-- Respect strict de la règle de gestion du gras
-
-KEY_PHRASES
-- 2 à 3 expressions exactes extraites du contenu
-- 3 à 10 mots
-- Permettent de saisir l’essentiel en lecture rapide
+RÈGLES
+- title : titre court, majuscule au premier mot, sans point final.
+- content : structure conforme à instructions de l'auteur si précisée, sinon concision par défaut.
+- key_phrases : sous-chaînes EXACTES de content (copier-coller tel quel, y compris articles et prépositions). Le système recherche chaque key_phrase dans le texte par correspondance stricte : si un seul mot diffère, le surlignage échoue. Être cohérent : si plusieurs éléments de même nature sont mentionnés, tous doivent être surlignés.
